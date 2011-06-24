@@ -6,11 +6,11 @@
  * time_start - when the team began its run
  * time_stop - when the team's run ended (either the max time if their time runs out, or the time they report)
  * 
- * //todo create a hasAndBelongsToMany relationship with Users
+ * //$$todo create a hasMany relationship with Users
  * 
  * @author ross
  */
-class TeamModel extends AppModel
+class Team extends AppModel
 {
 	var $name = 'Team';
 }

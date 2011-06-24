@@ -77,9 +77,9 @@ class DATABASE_CONFIG {
 		'driver' => 'mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'spritechase',
-		'password' => '72908df1d4b6887e2533b39b0db712d4',
-		'database' => 'spritechase',
+		'login' => 'spritech_db',
+		'password' => 'mKq5ST3ssA6EnsVIf',
+		'database' => 'spritech_db',
 		'prefix' => '',
 	);
 
