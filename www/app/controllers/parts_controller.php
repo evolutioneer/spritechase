@@ -88,6 +88,10 @@ class PartsController extends AppController
 				'dt_found' => date('Y-m-d H:i:s')
 			));
 			$this->PartUser->save($partUser);
+			
+			//Need to set this for the view setter below
+			$partUser['PartUser']['ct'] = $this->PartUser->data['PartUser']['ct'];
+			
 			$newPartUser = true;
 		}
 		
