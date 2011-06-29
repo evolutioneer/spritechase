@@ -42,6 +42,7 @@ class AppController extends Controller {
 			'password' => 'password'
 		);
 		
+		//$$debug allow auth all in our current debug state.
 		$this->Auth->allow('*');
 	}
 }

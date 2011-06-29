@@ -33,13 +33,14 @@ class PartsController extends AppController
 	function captured()
 	{
 		$id = $this->Session->read('Parts.id');
+		$this->Session->write('Parts.id', '');
 		$part = $this->Part->find('first', array('conditions' => array('id' => $id)));
 		$this->set('part', $part);
 		$roundId = $this->Auth->user('current_round_id');
 		$newPartUser = false;
 		$newPartRound = false;
 		
-		//Let the cron job handle the leaderboard shifts...  Too many transactions to care about it here.
+		//Let the cron job handle the leaderboard shifts...  Traffic on this method would incur too many transactions to handle it here.
 		
 		//$$testme if the user is on a team, add a row for this part to TeamParts table if the part didn't exist
 		if(!empty($roundId))
@@ -72,12 +73,12 @@ class PartsController extends AppController
 			}
 		}
 		
-		//$$testme add a row for this part to the UserParts table if the row didn't exist
+		//Add a row for this part to the UserParts table if the row didn't exist
 		$this->loadModel('PartUser');
 		$partUser = $this->PartUser->find('first', array('conditions' => array(
-			'part_id' => $part['Part']['id']),
+			'part_id' => $part['Part']['id'],
 			'user_id' => $this->Auth->user('id')
-		));
+		)));
 		
 		if(empty($partUser))
 		{
@@ -89,7 +90,7 @@ class PartsController extends AppController
 			));
 			$this->PartUser->save($partUser);
 			
-			//Need to set this for the view setter below
+			//Need to assign this value for the view setter to use below
 			$partUser['PartUser']['ct'] = $this->PartUser->data['PartUser']['ct'];
 			
 			$newPartUser = true;
