@@ -4,6 +4,13 @@ class UsersController extends AppController
 {
 	var $name = 'Users';
 	var $uses = array('User');
+	var $components = array('Auth', 'Cookie', 'Session', 'QRMaker');
+	
+	function beforeFilter()
+	{
+		parent::beforeFilter();
+		App::import('Sanitize');
+	}
 	
 	/**
 	 * 
@@ -19,12 +26,18 @@ class UsersController extends AppController
 	 */
 	function register()
 	{
-		//$$testme insert new row in database based on user registration
 		if($this->data)
 		{
-			if($this->User->save($this->data))
+			if($this->isFree($this->data['User']['name'], true))
 			{
-				$this->redirect('/pages/registration_successful');
+				$this->Session->setFlash('ERROR!  User name "' . $this->data['User']['name'] . '" is already in use.  Please try again.');
+				unset($this->data['User']['password']);
+			}
+			
+			else if($this->User->save($this->data))
+			{
+				//$$todo generate and save the user's AR marker
+				$this->redirect('/pages/user_registration_successful');
 			}
 			
 			else
@@ -38,15 +51,17 @@ class UsersController extends AppController
 	 * Find out if a user name is already used or not.  Returns plain JSON content.
 	 * @param $name String the name to check
 	 */
-	function isFree($name)
+	function isFree($name, $return)
 	{
 		$name = Sanitize::paranoid($name);
-		$exists = $this->User->find('first', array('conditions' => array('name' => $name)));
-		$exists = !empty($exists);
+		$isFree = $this->User->find('first', array('conditions' => array('name' => $name)));
+		$isFree = empty($isFree) === 1;
 		
-		$this->set('content', '{ "response": "' . $exists . '" }');
+		$this->set('content', '{ "response": "' . $isFree . '" }');
 		
-		$this->layout = '/layouts/js/default';
+		if($return) return $isFree;
+		
+		$this->layout = '/js/default';
 		$this->render('/common/plain');
 	}
 	
@@ -55,7 +70,10 @@ class UsersController extends AppController
 	 */
 	function uplink()
 	{
-		$this->set('code', $this->Auth->user('ar_marker_id'));
+		//Retrieve the user's AR marker from the file system
+		$code = $this->Auth->user('ar_marker_id');
+		$this->set('markerCode', $code);
+		$this->set('markerURL', $this->QRMaker->getMarkerImageURL($code));
 	}
 	
 	/**
