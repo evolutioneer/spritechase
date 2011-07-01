@@ -8,7 +8,6 @@ class User extends AppModel
 		'name' => array(
             'alphaNumeric' => array(
                 'rule' => array('custom', '/^[- .,?!@#$%^&*()_+=0-9a-z]+$/i'),
-                'required' => true,
                 'message' => 'Please use simpler characters for your handle'
                 ),
             'between' => array(
@@ -19,12 +18,15 @@ class User extends AppModel
         'password' => array(
             'alphaNumeric' => array(
                 'rule' => array('custom', '/^[- .,?!@#$%^&*()_+=0-9a-z]+$/i'),
-                'required' => true,
                 'message' => 'Please use simpler characters for your passcode.'
                 )
         )
     );
+    var $belongsTo = array('Team');
     
+    /**
+     * 
+     */
 	function beforeSave($options)
 	{
 		//If we're creating this guy, set some defaults.
@@ -41,6 +43,9 @@ class User extends AppModel
 		return true;
 	}
 	
+	/**
+     * 
+     */
 	function _getArMarkerid($id)
 	{
 		$output = 0 + $id;
@@ -51,6 +56,9 @@ class User extends AppModel
 		return $output;
 	}
 	
+	/**
+     * 
+     */
 	function _randLetter()
 	{
 	    $int = rand(0,25);

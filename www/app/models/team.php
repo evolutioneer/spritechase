@@ -13,4 +13,5 @@
 class Team extends AppModel
 {
 	var $name = 'Team';
+	var $hasMany = array('User');
 }
