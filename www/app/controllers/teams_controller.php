@@ -25,10 +25,10 @@ class TeamsController extends AppController
 				$team = $this->Team->find('first', array('conditions' => array('name' => $team['Team']['name'])));
 				$success = true;
 				
-				for($i = 0; $i < count($this->data['User']); $i++)
+				foreach($this->data['User'] as $key => $value)
 				{
 					$user = array('User' => array(
-						'id' => $this->data['User'][$i]['id'],
+						'id' => $key,
 						'team_id' => $team['Team']['id']
 					));
 					

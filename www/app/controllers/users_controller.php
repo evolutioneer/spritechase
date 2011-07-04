@@ -36,7 +36,7 @@ class UsersController extends AppController
 			
 			else if($this->User->save($this->data))
 			{
-				//$$todo generate and save the user's AR marker
+				$this->Auth->login();
 				$this->redirect('/pages/user_registration_successful');
 			}
 			
