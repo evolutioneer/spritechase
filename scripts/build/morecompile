@@ -1,0 +1,7 @@
+#!/bin/bash
+find . -name "*.more" | sed 's;\(.*\).more;lessc \1.more > \1.css;' > ./tmpcmd.sh
+chmod +x ./tmpcmd.sh
+cat ./tmpcmd.sh
+./tmpcmd.sh
+rm ./tmpcmd.sh
+echo "[MORECOMPILE] *.more > *.css compile complete"

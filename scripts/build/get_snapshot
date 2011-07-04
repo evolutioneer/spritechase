@@ -1,0 +1,15 @@
+#!/bin/bash
+# get_snapshot
+# A *nix command file that looks recursively in a folder structure for files of the given extension and writes per line to stdout:
+# 1) a "timestamp" of the last time the file was touched (based on ls -lA)
+# 2) the relative path to the file
+#
+# when calling get_snapshot, the first parameter is the base directory to seach from; the second parameter is the file extension.
+# hence "get_snapshot /my/project/folder css" will recursively find every css file in /my/project/folder,
+# along with the timestamp it was last modified on.
+#
+# @author Ross Smith
+# 2011-07-01
+# evolutioneer at gmail dot com
+#
+find $1 -name "*.$2" | xargs ls -lA | grep -v "min.$2" | sed -e 's/[ \t]\+/\t/gi' | cut -f 6- | sed 's;^\(.\{10\}\)\t;\1_;gi'

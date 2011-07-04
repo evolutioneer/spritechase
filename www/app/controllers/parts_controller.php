@@ -5,10 +5,77 @@ class PartsController extends AppController
 	var $name = 'Parts';
 	var $uses = array('Part');
 	
+	var $adminActions = array(
+		'index' => true,
+		'clear' => true
+	);
+	
+	/**
+	 *
+	 */
 	function beforeFilter()
 	{
-		//$$testme if this is the user's first visit, AKA no session is found for them on the phone, send them to the opening dialog
-		if(!$this->Session->check('Auth.User.id')) $this->redirect('/pages/intro');
+		parent::beforeFilter();
+		$this->Auth->authorize = 'controller';
+	}
+	
+	/**
+	 *
+	 */
+	function isAuthorized()
+	{
+		if(isset($this->adminActions[$this->action]))
+		{
+			return $this->Auth->user('role') == admin;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 *
+	 */
+	function index()
+	{
+		$this->Part->contain();
+		$this->set('parts', $this->Part->find('all', array('order' => 'name ASC')));
+		
+		$this->loadModel('PartsUser');
+		
+		$inventoryRs = $this->PartsUser->find('all', array('conditions' => array('user_id' => $this->Auth->user('id'))));
+		$inventory = array();
+		
+		for($i = 0; $i < count($inventoryRs); $i++)
+		{
+			$inventory[$inventoryRs[$i]['PartsUser']['part_id']] = true;
+		}
+		
+		$this->set('inventory', $inventory);
+	}
+	
+	/**
+	 *
+	 */
+	function clear()
+	{
+		$this->loadModel('PartsUser');
+		$partsUser = $this->PartsUser->find('all', array('conditions' => array('user_id' => $this->Auth->user('id'))));
+		
+		for($i = 0; $i < count($partsUser); $i++)
+		{
+			$this->PartsUser->delete($partsUser[$i]['PartsUser']['id']);
+		}
+		
+		$this->loadModel('ProjectsUser');
+		$projectsUser = $this->ProjectsUser->find('all', array('conditions' => array('user_id' => $this->Auth->user('id'))));
+		
+		for($i = 0; $i < count($projectsUser); $i++)
+		{
+			$this->ProjectsUser->delete($projectsUser[$i]['ProjectsUser']['id']);
+		}
+		
+		$this->Session->setFlash('User inventory and projects cleared.');
+		$this->redirect('/parts');
 	}
 	
 	/**
@@ -48,63 +115,63 @@ class PartsController extends AppController
 			$this->loadModel('Round');
 			$round = $this->Round->find('first', array('conditions' => array('id' => $roundId)));
 			
-			$this->loadModel('PartRound');
-			$partRound = $this->PartRound->find('first', array('conditions' => array(
+			$this->loadModel('PartsRound');
+			$partsRound = $this->PartsRound->find('first', array('conditions' => array(
 				'part_id' => $part['Part']['id'],
 				'round_id' => $roundId
 			)));
 			
-			if(empty($partRound))
+			if(empty($partsRound))
 			{
-				$this->PartRound->create();
-				$partRound = array('PartRound' => array(
+				$this->PartsRound->create();
+				$partsRound = array('PartsRound' => array(
 					'part_id' => $part['Part']['id'],
 					'round_id' => $roundId,
 					'dt_found' => date('Y-m-d H:i:s')
 				));
-				$this->PartRound->save($partRound);
-				$newPartRound = true;
+				$this->PartsRound->save($partsRound);
+				$newPartsRound = true;
 			}
 			
 			else
 			{
-				$partRound['PartRound']['ct']++;
-				$this->PartRound->save($partRound);
+				$partsRound['PartsRound']['ct']++;
+				$this->PartsRound->save($partsRound);
 			}
 		}
 		
 		//Add a row for this part to the UserParts table if the row didn't exist
-		$this->loadModel('PartUser');
-		$partUser = $this->PartUser->find('first', array('conditions' => array(
+		$this->loadModel('PartsUser');
+		$partsUser = $this->PartsUser->find('first', array('conditions' => array(
 			'part_id' => $part['Part']['id'],
 			'user_id' => $this->Auth->user('id')
 		)));
 		
-		if(empty($partUser))
+		if(empty($partsUser))
 		{
-			$this->PartUser->create();
-			$partUser = array('PartUser' => array(
+			$this->PartsUser->create();
+			$partsUser = array('PartsUser' => array(
 				'part_id' => $part['Part']['id'],
 				'user_id' => $this->Auth->user('id'),
 				'dt_found' => date('Y-m-d H:i:s')
 			));
-			$this->PartUser->save($partUser);
+			$this->PartsUser->save($partsUser);
 			
 			//Need to assign this value for the view setter to use below
-			$partUser['PartUser']['ct'] = $this->PartUser->data['PartUser']['ct'];
+			$partsUser['PartsUser']['ct'] = $this->PartsUser->data['PartsUser']['ct'];
 			
-			$newPartUser = true;
+			$newPartsUser = true;
 		}
 		
 		else
 		{
-			$partUser['PartUser']['ct']++;
-			$this->PartUser->save($partUser);
+			$partsUser['PartsUser']['ct']++;
+			$this->PartsUser->save($partsUser);
 		}
 		
 		//$$testme set all the data we'll need for the view
 		$this->set('part', $part);
-		$this->set('userTotal', $partUser['PartUser']['ct']);
-		$this->set('roundTotal', (empty($roundId) ? 0 : $partRound['PartRound']['ct']));
+		$this->set('userTotal', $partsUser['PartsUser']['ct']);
+		$this->set('roundTotal', (empty($roundId) ? 0 : $partsRound['PartsRound']['ct']));
 	}
 }
