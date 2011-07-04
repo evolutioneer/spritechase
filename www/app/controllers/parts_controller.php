@@ -6,7 +6,7 @@ class PartsController extends AppController
 	var $uses = array('Part');
 	
 	var $adminActions = array(
-		'index' => true,
+		'viewall' => true,
 		'clear' => true
 	);
 	
@@ -35,7 +35,7 @@ class PartsController extends AppController
 	/**
 	 *
 	 */
-	function index()
+	function viewall()
 	{
 		$this->Part->contain();
 		$this->set('parts', $this->Part->find('all', array('order' => 'name ASC')));
@@ -75,7 +75,7 @@ class PartsController extends AppController
 		}
 		
 		$this->Session->setFlash('User inventory and projects cleared.');
-		$this->redirect('/parts');
+		$this->redirect('/parts/viewall');
 	}
 	
 	/**

@@ -1,36 +1,42 @@
 a {
   text-decoration: none;
 }
-#parts-list .items {
+.items {
   width: 100%;
 }
-#parts-list .items .item {
-  width: 500px;
-  min-height: 80px;
+.items .item {
   display: block;
   float: left;
   background: #eee;
   margin: 10px;
 }
-#parts-list .items .item .thumbnail {
+.items .item .thumbnail {
   margin: 5px;
   float: left;
   border: 1px solid #444;
 }
-#parts-list .items .item .title {
+.items .item .title {
   font-size: 24pt;
   color: #000;
 }
-#parts-list .items .item .description {
+.items .item .description {
   font-style: italic;
   color: #444;
 }
-#parts-list .items .item.captured {
+.items .item.captured {
   background-color: #ff0;
 }
-#parts-list .items .item:hover {
+.items .item:hover {
   background-color: #ddd;
 }
-#parts-list .items .item.captured:hover {
+.items .item.captured:hover {
   background-color: #e5e600;
+}
+#parts-list .item {
+  width: 500px;
+  min-height: 80px;
+}
+#projects-list .item {
+  width: 500px;
+  min-height: 200px;
 }

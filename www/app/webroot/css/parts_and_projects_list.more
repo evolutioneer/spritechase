@@ -1,0 +1,71 @@
+a
+{
+	text-decoration: none;
+}
+
+.items
+	{
+	width: 100%;
+
+	.item
+	{
+		display: block;
+		float: left;
+		
+		background: #eee;
+		margin: 10px;
+		
+		.thumbnail
+		{
+			margin: 5px;
+			float: left;
+			border: 1px solid #444;
+		}
+		
+		.title
+		{
+			font-size: 24pt;
+			color: #000;
+		}
+		
+		.description 
+		{
+			font-style: italic;
+			color: #444;
+		}
+	}
+	
+	.item.captured
+	{
+		background-color: #ff0;
+	}
+	
+	.item:hover
+	{
+		background-color: #ddd;
+	}
+	
+	.item.captured:hover
+	{
+		background-color: darken(#ff0, 5%);
+	}
+}
+
+
+#parts-list
+{
+	.item
+	{
+		width: 500px;
+		min-height: 80px;
+	}
+}
+
+#projects-list
+{
+	.item
+	{
+		width: 500px;
+		min-height: 200px;
+	}	
+}
