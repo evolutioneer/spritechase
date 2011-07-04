@@ -113,7 +113,7 @@ CREATE TABLE `parts_users` (
   `ct` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `part_id` (`part_id`,`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,8 +151,34 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'Life-Sized Mouse Trap','','','',''),(2,'Maker Bot','','','',''),(3,'Coke and Mentos','','','',''),(4,'Cupcake Car','','','',''),(5,'Waterfall Swing','','','',''),(6,'FIRST Robot','','','',''),(7,'Compressed Air Rocket','','','',''),(8,'Twinkie Car','','','',''),(9,'Fire-Breathing Red Green','','','',''),(10,'Giant Lego Chess','','','',''),(11,'Learn to Solder Badge','','','',''),(12,'Cigar Box Guitar','','','',''),(13,'Circuit Bent Casio','','','',''),(14,'Quadcopter','','','',''),(15,'Chronotune','','','',''),(16,'Open Soda','','','',''),(17,'Gigantic Puppet Head','','','',''),(18,'Hackerspace','','','',''),(19,'Power Wheels Racer','','','',''),(20,'Talking Teddy Bear','','','','');
+INSERT INTO `projects` VALUES (1,'Life-Sized Mouse Trap','Empty Description','','',''),(2,'Maker Bot','Empty Description','','',''),(3,'Coke and Mentos','Empty Description','','',''),(4,'Cupcake Car','Empty Description','','',''),(5,'Waterfall Swing','Empty Description','','',''),(6,'FIRST Robot','Empty Description','','',''),(7,'Compressed Air Rocket','Empty Description','','',''),(8,'Twinkie Car','Empty Description','','',''),(9,'Fire-Breathing Red Green','Empty Description','','',''),(10,'Giant Lego Chess','Empty Description','','',''),(11,'Learn to Solder Badge','Empty Description','','',''),(12,'Cigar Box Guitar','Empty Description','','',''),(13,'Circuit Bent Casio','Empty Description','','',''),(14,'Quadcopter','Empty Description','','',''),(15,'Chronotune','Empty Description','','',''),(16,'Open Soda','Empty Description','','',''),(17,'Gigantic Puppet Head','Empty Description','','',''),(18,'Hackerspace','Empty Description','','',''),(19,'Power Wheels Racer','Empty Description','','',''),(20,'Talking Teddy Bear','Empty Description','','','');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `projects_users`
+--
+
+DROP TABLE IF EXISTS `projects_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `projects_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `dt_found` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `project_id` (`project_id`,`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `projects_users`
+--
+
+LOCK TABLES `projects_users` WRITE;
+/*!40000 ALTER TABLE `projects_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `projects_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -170,7 +196,7 @@ CREATE TABLE `rounds` (
   `dt_completed` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `team_id` (`team_id`,`project_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,6 +205,7 @@ CREATE TABLE `rounds` (
 
 LOCK TABLES `rounds` WRITE;
 /*!40000 ALTER TABLE `rounds` DISABLE KEYS */;
+INSERT INTO `rounds` VALUES (1,31,1,'2011-07-04 14:33:37','0000-00-00 00:00:00'),(2,31,2,'2011-07-03 14:33:52','2011-07-04 14:33:55');
 /*!40000 ALTER TABLE `rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +223,7 @@ CREATE TABLE `teams` (
   `time_stop` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,6 +232,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+INSERT INTO `teams` VALUES (31,'Our Team, Yo','0000-00-00 00:00:00','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +267,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (18,'bananabot','admin',0,'2011-07-04 12:40:34','2011-07-04 16:41:16',1,NULL,'45115tyd','9885e0c2971fdc37b0c64d5bdb4c052f1d70ebf1'),(19,'gamer','user',0,'2011-07-04 12:41:34','2011-07-04 16:41:34',1,NULL,'21063gul','ac38fb32bdcd94887ef9568b378df02d207efd1c');
+INSERT INTO `users` VALUES (18,'bananabot','admin',31,'2011-07-04 12:40:34','2011-07-04 18:19:23',1,NULL,'45115tyd','9885e0c2971fdc37b0c64d5bdb4c052f1d70ebf1'),(19,'gamer','user',31,'2011-07-04 12:41:34','2011-07-04 18:19:23',1,NULL,'21063gul','ac38fb32bdcd94887ef9568b378df02d207efd1c');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -252,4 +280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-04 12:45:59
+-- Dump completed on 2011-07-04 15:49:06
