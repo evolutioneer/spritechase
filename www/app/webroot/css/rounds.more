@@ -1,4 +1,94 @@
 #projects
 {
+	.items
+	{
+		.item
+		{
+			float: left;
+			border: 1px solid red;
+			
+			width: 100%;
+			height: auto;
+			
+			cursor: pointer;
+			user-enabled: false;
+			
+			.thumbnail
+			{
+				float: left;
+			}
+			
+			.title
+			{
+				font-size: 24pt;
+			}
+			
+			.description
+			{
+				font-size: 12pt;
+			}
+			   
+			.stats
+			{
+				float: right;
+				
+				.started, .completed
+				{
+					float: left;
+					border-radius: 8px;
+					padding: 10px;
+					margin: 3px;
+					box-shadow: 2px 3px 3px #ddd;
+				}
+				
+				.started
+				{
+					background-color: #ff0;
+					color: #000;
+				}
+			
+				.completed
+				{
+					background-color: #0f0;
+					color: #fff;
+				}
+			}
+		}
+	}
+}
+
+#confirm-window
+{
+	display: none;
 	
+	z-index: 100;
+	position: fixed;
+	top: 0;
+	left: 0;
+	
+	padding: 20px;
+	margin: 10px;
+	border-radius: 3px;
+	background-color: #ccc;
+	
+	.button
+	{
+		cursor: pointer;
+		display: block;
+		float: left;
+		padding: 10px;
+		margin: 4px;
+		border-radius: 5px;
+		background-color: #999;
+	}
+	
+	.button:hover
+	{
+		background-color: #ff0;
+	}
+	
+	.button:active
+	{
+		background-color: #000;
+	}
 }

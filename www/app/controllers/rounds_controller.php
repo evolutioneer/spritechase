@@ -41,7 +41,7 @@ class RoundsController extends AppController
 		
 		if($this->data)
 		{
-			$currentRound = $this->Round->find('first', array('conditions' => array('id' => $this->Auth->user('current_round_id'))));
+			$currentRound = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Auth->user('current_round_id'))));
 			
 			if(!empty($currentRound))
 			{
@@ -52,16 +52,32 @@ class RoundsController extends AppController
 			else
 			{
 				$this->loadModel('Team');
+				$this->loadModel('User');
 				
 				$this->Team->contain('User');
-				$team = $this->Team->find('first', array('conditions' => array('id' => $this->Auth->user('team_id'))));
+				$teamAndUsers = $this->Team->find('first', array('conditions' => array('id' => $this->Auth->user('team_id'))));
 				
-				$round = $this->Round->create();
+				$this->Round->create();
+				$this->Round->save(array(
+					'team_id' => $this->Auth->user('team_id'),
+					'project_id' => $this->data['Project']['id'],
+					'dt_started' => date('Y-m-d H:i:s')
+				));
+				
+				$this->Round->contain();
+				$round = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Round->getLastInsertID())));
+				
+				//$$testme save the current round ID to each user row in the team
+				for($i = 0; $i < count($teamAndUsers['User']); $i++)
+				{
+					$teamAndUsers['User'][$i]['current_round_id'] = $round['Round']['id'];
+					$this->User->save($teamAndUsers['User'][$i]);
+				}
 				
 				//$$todo create and pouplate the round; save the round id to each user's data
 				//$$todo dispatch a message to each user of the team signaling that the round has started
 				
-				$this->redirect('/pages/round_started');
+				//$this->redirect('/pages/round_started');
 			}
 		}
 		

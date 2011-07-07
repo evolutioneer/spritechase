@@ -109,11 +109,12 @@ class PartsController extends AppController
 		
 		//Let the cron job handle the leaderboard shifts...  Traffic on this method would incur too many transactions to handle it here.
 		
-		//$$testme if the user is on a team, add a row for this part to TeamParts table if the part didn't exist
+		//If the user is on a team, add a row for this part to TeamParts table if the part didn't exist
 		if(!empty($roundId))
 		{
 			$this->loadModel('Round');
-			$round = $this->Round->find('first', array('conditions' => array('id' => $roundId)));
+			$this->Round->contain();
+			$round = $this->Round->find('first', array('conditions' => array('Round.id' => $roundId)));
 			
 			$this->loadModel('PartsRound');
 			$partsRound = $this->PartsRound->find('first', array('conditions' => array(
@@ -127,7 +128,8 @@ class PartsController extends AppController
 				$partsRound = array('PartsRound' => array(
 					'part_id' => $part['Part']['id'],
 					'round_id' => $roundId,
-					'dt_found' => date('Y-m-d H:i:s')
+					'dt_found' => date('Y-m-d H:i:s'),
+					'ct' => 1
 				));
 				$this->PartsRound->save($partsRound);
 				$newPartsRound = true;
@@ -153,7 +155,8 @@ class PartsController extends AppController
 			$partsUser = array('PartsUser' => array(
 				'part_id' => $part['Part']['id'],
 				'user_id' => $this->Auth->user('id'),
-				'dt_found' => date('Y-m-d H:i:s')
+				'dt_found' => date('Y-m-d H:i:s'),
+				'ct' => 1
 			));
 			$this->PartsUser->save($partsUser);
 			

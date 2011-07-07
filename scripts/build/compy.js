@@ -65,7 +65,7 @@ var Compy = (function()
 			snapshot = stdout;
 			doCompile(parseSnapshot(snapshot, extension), extension);
 		});
-	};//.async();
+	};
 	
 	//-------------------------------------------------------------------------
 	var doCompile = function(toCompile)
@@ -152,9 +152,7 @@ var Compy = (function()
 fs.readFile(CompyTable.path, 'utf-8', function(err, data) {
 	CompyTable.data = JSON.parse(data) || '{}';
 	//$$debug compy is behaving like a non-blocking asynchronous little angelic PIMA, and sync/threads packages aren't installing.  Disabling compile for now.
-	//Compy.compile('more', function(err, result) {
-		Compy.compress('js', '--line-break 800');
-		Compy.compress('css', '--line-break 800 --type css');
-	//});
-	
+	//Compy.compile('more');
+	Compy.compress('js', '--line-break 800');
+	Compy.compress('css', '--line-break 800 --type css');
 });
