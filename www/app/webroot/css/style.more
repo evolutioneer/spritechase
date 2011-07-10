@@ -1,23 +1,35 @@
 @import 'www/app/webroot/css/boilerplate_before';
+@import 'www/app/webroot/css/constants';
 
-@content-margin: 70px;
-@content-width: 590px; 
-	
+@content-width: @scale-factor * 590px; 
+@content-width-landscape: @scale-factor * 920px;
+
 body
 {
 	background-color: #ddd;
+	-webkit-user-select:none;
+    -webkit-text-size-adjust:none;
 }
 
 #container
 {
-	width: @content-margin * 2 + @content-width;
 	margin: 0 auto;
 	background-color: #eee;
 }
 
+.portrait #container
+{
+	width: @content-width;
+}
+
+.landscape #container
+{
+	width: @content-width-landscape;
+}
+
 #content
 {
-	margin: 0px @content-margin;
+	margin: 0;
 	width: @content-width;
 }
 

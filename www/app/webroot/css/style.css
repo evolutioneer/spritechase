@@ -297,15 +297,22 @@ table {
    ========================================================================== */
 body {
   background-color: #ddd;
+  -webkit-user-select: none;
+  -webkit-text-size-adjust: none;
 }
 #container {
-  width: 730px;
   margin: 0 auto;
   background-color: #eee;
 }
+.portrait #container {
+  width: 295px;
+}
+.landscape #container {
+  width: 460px;
+}
 #content {
-  margin: 0px 70px;
-  width: 590px;
+  margin: 0;
+  width: 295px;
 }
 /* =============================================================================
    Non-semantic helper classes

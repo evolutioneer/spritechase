@@ -1,25 +1,152 @@
-@scale-factor: 1;
-@sprite-face-width: @scale-factor * 364px;
-@sprite-face-height: @scale-factor * 372px;
-@next-button-size: @scale-factor * 232px;
-@login-button-size: @scale-factor * 140px;
-@lights-width: @scale-factor * 92px;
-@lights-height: @scale-factor * 140px;
-@sprite-name-width: @sprite-face-width + @next-button-size;
-@sprite-name-height: @scale-factor * 60px;
+@import 'www/app/webroot/css/constants';
 
 #container
 {
 	background: url(../img/dialog_comp.png) top center no-repeat;
-	height: 1000px;
-	margin-top: 5px;
+	margin-top: @scale-factor * 5px;
+}
+
+@media screen and (max-width: 480px) { 
+	#container
+	{
+		background: url(../img/dialog_comp_half.png) top center no-repeat;
+	}
+}
+
+//Landscape vs. Portrait style rules
+
+body .loading
+{
+	display: none;
+}
+
+body.no-orientation
+{
+	.dialog-top
+	{
+		display: none;
+	}
+	
+	.dialog-box
+	{
+		display: none;
+	}
+	
+	.loading
+	{
+		display: block;
+	}
+}
+
+body.portrait
+{
+	#container
+	{
+		height: @scale-factor * 960px;
+	}
+	
+	.dialog-top
+	{
+		top: 0px;
+		left: 0px;
+	}
+	
+	.sprite-face
+	{
+		top: 0px;
+		left: 0px;
+	} 
+	
+	.next.button
+	{
+		top: 0px;
+		left: @sprite-face-size;
+	}
+	
+	.lights
+	{
+		top: @next-button-size;
+		left: @sprite-face-size;
+	}
+	
+	.login.button
+	{
+		top: @next-button-size;
+		left: @sprite-face-size + @lights-width;
+	}
+	
+	.sprite.name
+	{
+		top: @sprite-face-size;
+		left: 0px;
+	}
+	
+	.dialog-box
+	{
+		top: @sprite-face-size + @sprite-name-height + @scale-factor * 50px;
+		height: @scale-factor * 360px;
+	}
+}
+
+body.landscape
+{
+	#container
+	{
+		height: @scale-factor * 640px;
+	}
+	
+	.dialog-top
+	{
+		top: 0px;
+		left: 0px;
+	}
+	
+	.sprite-face
+	{
+		top: 0px;
+		left: 0px;
+	} 
+	
+	.next.button
+	{
+		top: @sprite-face-size * @sprite-face-crunch-factor;
+		left: @login-button-size;
+	}
+	
+	.lights
+	{
+		top: @sprite-face-size * @sprite-face-crunch-factor;
+		left: 0px;
+		width: @lights-height;
+		height: @lights-width;
+	}
+	
+	.login.button
+	{
+		top: (@sprite-face-size * @sprite-face-crunch-factor) + @lights-width;
+		left: 0px;
+	}
+	
+	.sprite.name
+	{
+		top: 0px;
+		left: 0px;
+		z-index: 110;
+		width: @sprite-face-size;
+	}
+	
+	.dialog-box
+	{
+		top: 0px;
+		left: @sprite-face-size;
+		height: @scale-factor * 500px;
+	}
 }
 
 .dialog-top
 {
 	position: relative;
-	top: 0px;
-	left: 0px;
+	z-index: 100;
 	
 	*
 	{
@@ -29,10 +156,8 @@
 	
 	.sprite.face
 	{
-		width: @sprite-face-width;
-		height: @sprite-face-height;
-		top: 0px;
-		left: 0px;
+		width: @sprite-face-size;
+		height: @sprite-face-size;
 		background-color: #ff0;
 	}
 	
@@ -40,8 +165,6 @@
 	{
 		width: @next-button-size;
 		height: @next-button-size;
-		top: 0px;
-		left: @sprite-face-width;
 		background-color: #afa;
 	}
 	
@@ -49,17 +172,13 @@
 	{
 		width: @lights-width;
 		height: @lights-height;
-		top: @next-button-size;
-		left: @sprite-face-width;
 		background-color: #ff0;
 	}
 	
 	.login.button
 	{
-		width: 140px;
-		height: 140px;
-		top: @next-button-size;
-		left: @sprite-face-width + @lights-width;
+		width: @login-button-size;
+		height: @login-button-size;
 		background-color: #0f0;
 	}
 	
@@ -67,8 +186,6 @@
 	{
 		width: @sprite-name-width;
 		height: @sprite-name-height;
-		top: @sprite-face-height;
-		left: 0px;
 		background-color: #0ff;
 		
 		color: #fff;
@@ -86,18 +203,16 @@
 
 .dialog-box
 {
-	position: relative;
-	top: @sprite-face-height + @sprite-name-height;
-	width: @sprite-face-width + @next-button-size;
-	background-color: #f99;
-	padding-top: 50px;
-	opacity: 0.9;
-}
-
-#dialog-wrapper
-{
-	width: 540px;
+	position:relative; z-index:1;
 	margin: 0 auto;
+	height: @scale-factor * 360px;
+	width: 0.9 * (@sprite-face-size + @next-button-size);
+	padding:0;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	
+	color: #fff;
+	font: Courier sans-serif;
+	font-size: @scale-factor * 32pt;
 }
 
 #data

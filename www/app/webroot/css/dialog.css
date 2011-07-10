@@ -1,71 +1,143 @@
 #container {
   background: url(../img/dialog_comp.png) top center no-repeat;
-  height: 1000px;
-  margin-top: 5px;
+  margin-top: 2.5px;
+}
+@media screen and (max-width: 480px) {
+  #container {
+    background: url(../img/dialog_comp_half.png) top center no-repeat;
+  }
+}
+body .loading {
+  display: none;
+}
+body.no-orientation .dialog-top {
+  display: none;
+}
+body.no-orientation .dialog-box {
+  display: none;
+}
+body.no-orientation .loading {
+  display: block;
+}
+body.portrait #container {
+  height: 480px;
+}
+body.portrait .dialog-top {
+  top: 0px;
+  left: 0px;
+}
+body.portrait .sprite-face {
+  top: 0px;
+  left: 0px;
+}
+body.portrait .next.button {
+  top: 0px;
+  left: 182px;
+}
+body.portrait .lights {
+  top: 114px;
+  left: 182px;
+}
+body.portrait .login.button {
+  top: 114px;
+  left: 226px;
+}
+body.portrait .sprite.name {
+  top: 182px;
+  left: 0px;
+}
+body.portrait .dialog-box {
+  top: 237px;
+  height: 180px;
+}
+body.landscape #container {
+  height: 320px;
+}
+body.landscape .dialog-top {
+  top: 0px;
+  left: 0px;
+}
+body.landscape .sprite-face {
+  top: 0px;
+  left: 0px;
+}
+body.landscape .next.button {
+  top: 154.7px;
+  left: 68px;
+}
+body.landscape .lights {
+  top: 154.7px;
+  left: 0px;
+  width: 68px;
+  height: 44px;
+}
+body.landscape .login.button {
+  top: 198.7px;
+  left: 0px;
+}
+body.landscape .sprite.name {
+  top: 0px;
+  left: 0px;
+  z-index: 110;
+  width: 182px;
+}
+body.landscape .dialog-box {
+  top: 0px;
+  left: 182px;
+  height: 250px;
 }
 .dialog-top {
   position: relative;
-  top: 0px;
-  left: 0px;
+  z-index: 100;
 }
 .dialog-top * {
   position: absolute;
   opacity: 0.9;
 }
 .dialog-top .sprite.face {
-  width: 364px;
-  height: 372px;
-  top: 0px;
-  left: 0px;
+  width: 182px;
+  height: 182px;
   background-color: #ff0;
 }
 .dialog-top .next.button {
-  width: 232px;
-  height: 232px;
-  top: 0px;
-  left: 364px;
+  width: 114px;
+  height: 114px;
   background-color: #afa;
 }
 .dialog-top .lights {
-  width: 92px;
-  height: 140px;
-  top: 232px;
-  left: 364px;
+  width: 44px;
+  height: 68px;
   background-color: #ff0;
 }
 .dialog-top .login.button {
-  width: 140px;
-  height: 140px;
-  top: 232px;
-  left: 456px;
+  width: 68px;
+  height: 68px;
   background-color: #0f0;
 }
 .dialog-top .sprite.name {
-  width: 596px;
-  height: 60px;
-  top: 372px;
-  left: 0px;
+  width: 296px;
+  height: 30px;
   background-color: #0ff;
   color: #fff;
   font: Courier sans-serif;
-  font-size: 24pt;
-  letter-spacing: 2px;
+  font-size: 12pt;
+  letter-spacing: 1px;
 }
 .dialog-top .sprite.name span {
-  padding-top: 10px;
-  padding-left: 36px;
+  padding-top: 5px;
+  padding-left: 18px;
 }
 .dialog-box {
   position: relative;
-  top: 432px;
-  width: 596px;
-  background-color: #f99;
-  padding-top: 50px;
-  opacity: 0.9;
-}
-#dialog-wrapper {
-  width: 540px;
+  z-index: 1;
   margin: 0 auto;
+  height: 180px;
+  width: 266.40000000000003px;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  font: Courier sans-serif;
+  font-size: 16pt;
 }
 #data {
   display: none;
