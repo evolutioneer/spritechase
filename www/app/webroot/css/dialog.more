@@ -2,15 +2,7 @@
 
 #container
 {
-	background: url(../img/dialog_comp.png) top center no-repeat;
 	margin-top: @scale-factor * 5px;
-}
-
-@media screen and (max-width: 480px) { 
-	#container
-	{
-		background: url(../img/dialog_comp_half.png) top center no-repeat;
-	}
 }
 
 //Landscape vs. Portrait style rules
@@ -27,7 +19,7 @@ body.no-orientation
 		display: none;
 	}
 	
-	.dialog-box
+	.dialog-screen
 	{
 		display: none;
 	}
@@ -40,6 +32,10 @@ body.no-orientation
 
 body.portrait
 {
+	background-image: url(../img/dialog/screen_background_portrait.png);
+	background-position: center;
+	background-repeat: repeat-y;
+	
 	#container
 	{
 		height: @scale-factor * 960px;
@@ -81,15 +77,18 @@ body.portrait
 		left: 0px;
 	}
 	
-	.dialog-box
+	//.dialog-box
+	.dialog-screen
 	{
-		top: @sprite-face-size + @sprite-name-height + @scale-factor * 50px;
+		top: @sprite-face-size + @sprite-name-height;
 		height: @scale-factor * 360px;
 	}
 }
 
 body.landscape
 {
+	background: url(../img/dialog/screen_background_landscape.png) middle center repeat-y;
+	
 	#container
 	{
 		height: @scale-factor * 640px;
@@ -132,10 +131,10 @@ body.landscape
 		top: 0px;
 		left: 0px;
 		z-index: 110;
-		width: @sprite-face-size;
 	}
 	
-	.dialog-box
+	//.dialog-box
+	.dialog-screen
 	{
 		top: 0px;
 		left: @sprite-face-size;
@@ -151,46 +150,54 @@ body.landscape
 	*
 	{
 		position: absolute;
-		opacity: 0.9;
 	}
 	
 	.sprite.face
 	{
 		width: @sprite-face-size;
 		height: @sprite-face-size;
-		background-color: #ff0;
+		background-image: url(../img/dialog/sprite_face.png);
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 	
 	.next.button
 	{
 		width: @next-button-size;
-		height: @next-button-size;
-		background-color: #afa;
+		height: @next-button-size;background-image: url(../img/dialog/next_button.png);
+		background-position: bottom left;
+		background-repeat: no-repeat;
 	}
 	
 	.lights
 	{
 		width: @lights-width;
-		height: @lights-height;
-		background-color: #ff0;
+		height: @lights-height;background-image: url(../img/dialog/lights.png);
+		background-position: bottom left;
+		background-repeat: no-repeat;
 	}
 	
 	.login.button
 	{
 		width: @login-button-size;
 		height: @login-button-size;
-		background-color: #0f0;
+		background-image: url(../img/dialog/login_button.png);
+		background-position: top left;
+		background-repeat: no-repeat;
 	}
 	
 	.sprite.name
 	{
-		width: @sprite-name-width;
+		width: @sprite-face-size;
 		height: @sprite-name-height;
-		background-color: #0ff;
+		background-image: url(../img/dialog/sprite_name.png);
+		background-position: center;
+		background-repeat: no-repeat;
 		
 		color: #fff;
-		font: Courier sans-serif;
-		font-size: @scale-factor * 24pt;
+		font-family: courier, /* Unix+X, MacOS */ monospace, sans-serif;
+		font-weight: bold;
+		font-size: @scale-factor * 20pt;
 		letter-spacing: @scale-factor * 2px;
 		
 		span
@@ -201,18 +208,31 @@ body.landscape
 	}
 }
 
+.dialog-screen
+{
+	position:relative;
+	z-index:1;
+	height: @scale-factor * 360px;
+	width: @sprite-face-size + @next-button-size;
+	padding-top: @scale-factor * 50px;
+	
+	background-image: url(../img/dialog/dialog_box.png);
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
 .dialog-box
 {
-	position:relative; z-index:1;
-	margin: 0 auto;
-	height: @scale-factor * 360px;
-	width: 0.9 * (@sprite-face-size + @next-button-size);
+	width: 90%;
+	height: 100%;
 	padding:0;
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	margin: 0 auto;
 	
 	color: #fff;
-	font: Courier sans-serif;
-	font-size: @scale-factor * 32pt;
+	font-family: courier, /* Unix+X, MacOS */ monospace, sans-serif;
+	font-weight: bold;
+	font-size: @scale-factor * 24pt;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
 #data

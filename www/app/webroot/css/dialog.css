@@ -1,11 +1,5 @@
 #container {
-  background: url(../img/dialog_comp.png) top center no-repeat;
   margin-top: 2.5px;
-}
-@media screen and (max-width: 480px) {
-  #container {
-    background: url(../img/dialog_comp_half.png) top center no-repeat;
-  }
 }
 body .loading {
   display: none;
@@ -13,11 +7,16 @@ body .loading {
 body.no-orientation .dialog-top {
   display: none;
 }
-body.no-orientation .dialog-box {
+body.no-orientation .dialog-screen {
   display: none;
 }
 body.no-orientation .loading {
   display: block;
+}
+body.portrait {
+  background-image: url(../img/dialog/screen_background_portrait.png);
+  background-position: center;
+  background-repeat: repeat-y;
 }
 body.portrait #container {
   height: 480px;
@@ -32,23 +31,26 @@ body.portrait .sprite-face {
 }
 body.portrait .next.button {
   top: 0px;
-  left: 182px;
+  left: 184px;
 }
 body.portrait .lights {
-  top: 114px;
-  left: 182px;
+  top: 116px;
+  left: 184px;
 }
 body.portrait .login.button {
-  top: 114px;
-  left: 226px;
+  top: 116px;
+  left: 232px;
 }
 body.portrait .sprite.name {
-  top: 182px;
+  top: 184px;
   left: 0px;
 }
-body.portrait .dialog-box {
-  top: 237px;
+body.portrait .dialog-screen {
+  top: 214px;
   height: 180px;
+}
+body.landscape {
+  background: url(../img/dialog/screen_background_landscape.png) middle center repeat-y;
 }
 body.landscape #container {
   height: 320px;
@@ -62,28 +64,27 @@ body.landscape .sprite-face {
   left: 0px;
 }
 body.landscape .next.button {
-  top: 154.7px;
+  top: 156.4px;
   left: 68px;
 }
 body.landscape .lights {
-  top: 154.7px;
+  top: 156.4px;
   left: 0px;
   width: 68px;
-  height: 44px;
+  height: 48px;
 }
 body.landscape .login.button {
-  top: 198.7px;
+  top: 204.4px;
   left: 0px;
 }
 body.landscape .sprite.name {
   top: 0px;
   left: 0px;
   z-index: 110;
-  width: 182px;
 }
-body.landscape .dialog-box {
+body.landscape .dialog-screen {
   top: 0px;
-  left: 182px;
+  left: 184px;
   height: 250px;
 }
 .dialog-top {
@@ -92,52 +93,71 @@ body.landscape .dialog-box {
 }
 .dialog-top * {
   position: absolute;
-  opacity: 0.9;
 }
 .dialog-top .sprite.face {
-  width: 182px;
-  height: 182px;
-  background-color: #ff0;
+  width: 184px;
+  height: 184px;
+  background-image: url(../img/dialog/sprite_face.png);
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .dialog-top .next.button {
-  width: 114px;
-  height: 114px;
-  background-color: #afa;
+  width: 116px;
+  height: 116px;
+  background-image: url(../img/dialog/next_button.png);
+  background-position: bottom left;
+  background-repeat: no-repeat;
 }
 .dialog-top .lights {
-  width: 44px;
+  width: 48px;
   height: 68px;
-  background-color: #ff0;
+  background-image: url(../img/dialog/lights.png);
+  background-position: bottom left;
+  background-repeat: no-repeat;
 }
 .dialog-top .login.button {
   width: 68px;
   height: 68px;
-  background-color: #0f0;
+  background-image: url(../img/dialog/login_button.png);
+  background-position: top left;
+  background-repeat: no-repeat;
 }
 .dialog-top .sprite.name {
-  width: 296px;
+  width: 184px;
   height: 30px;
-  background-color: #0ff;
+  background-image: url(../img/dialog/sprite_name.png);
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
-  font: Courier sans-serif;
-  font-size: 12pt;
+  font-family: courier, /* Unix+X, MacOS */ monospace, sans-serif;
+  font-weight: bold;
+  font-size: 10pt;
   letter-spacing: 1px;
 }
 .dialog-top .sprite.name span {
   padding-top: 5px;
   padding-left: 18px;
 }
-.dialog-box {
+.dialog-screen {
   position: relative;
   z-index: 1;
-  margin: 0 auto;
   height: 180px;
-  width: 266.40000000000003px;
+  width: 300px;
+  padding-top: 25px;
+  background-image: url(../img/dialog/dialog_box.png);
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+.dialog-box {
+  width: 90%;
+  height: 100%;
   padding: 0;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  margin: 0 auto;
   color: #fff;
-  font: Courier sans-serif;
-  font-size: 16pt;
+  font-family: courier, /* Unix+X, MacOS */ monospace, sans-serif;
+  font-weight: bold;
+  font-size: 12pt;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 #data {
   display: none;

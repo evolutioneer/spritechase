@@ -6,7 +6,7 @@
 
 body
 {
-	background-color: #ddd;
+	background-color: #384448;
 	-webkit-user-select:none;
     -webkit-text-size-adjust:none;
 }
@@ -14,7 +14,6 @@ body
 #container
 {
 	margin: 0 auto;
-	background-color: #eee;
 }
 
 .portrait #container
