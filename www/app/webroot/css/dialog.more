@@ -1,0 +1,106 @@
+@scale-factor: 1;
+@sprite-face-width: @scale-factor * 364px;
+@sprite-face-height: @scale-factor * 372px;
+@next-button-size: @scale-factor * 232px;
+@login-button-size: @scale-factor * 140px;
+@lights-width: @scale-factor * 92px;
+@lights-height: @scale-factor * 140px;
+@sprite-name-width: @sprite-face-width + @next-button-size;
+@sprite-name-height: @scale-factor * 60px;
+
+#container
+{
+	background: url(../img/dialog_comp.png) top center no-repeat;
+	height: 1000px;
+	margin-top: 5px;
+}
+
+.dialog-top
+{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	
+	*
+	{
+		position: absolute;
+		opacity: 0.9;
+	}
+	
+	.sprite.face
+	{
+		width: @sprite-face-width;
+		height: @sprite-face-height;
+		top: 0px;
+		left: 0px;
+		background-color: #ff0;
+	}
+	
+	.next.button
+	{
+		width: @next-button-size;
+		height: @next-button-size;
+		top: 0px;
+		left: @sprite-face-width;
+		background-color: #afa;
+	}
+	
+	.lights
+	{
+		width: @lights-width;
+		height: @lights-height;
+		top: @next-button-size;
+		left: @sprite-face-width;
+		background-color: #ff0;
+	}
+	
+	.login.button
+	{
+		width: 140px;
+		height: 140px;
+		top: @next-button-size;
+		left: @sprite-face-width + @lights-width;
+		background-color: #0f0;
+	}
+	
+	.sprite.name
+	{
+		width: @sprite-name-width;
+		height: @sprite-name-height;
+		top: @sprite-face-height;
+		left: 0px;
+		background-color: #0ff;
+		
+		color: #fff;
+		font: Courier sans-serif;
+		font-size: @scale-factor * 24pt;
+		letter-spacing: @scale-factor * 2px;
+		
+		span
+		{
+			padding-top: @scale-factor * 10px;
+			padding-left: @scale-factor * 36px;
+		}
+	}
+}
+
+.dialog-box
+{
+	position: relative;
+	top: @sprite-face-height + @sprite-name-height;
+	width: @sprite-face-width + @next-button-size;
+	background-color: #f99;
+	padding-top: 50px;
+	opacity: 0.9;
+}
+
+#dialog-wrapper
+{
+	width: 540px;
+	margin: 0 auto;
+}
+
+#data
+{
+	display: none;
+}

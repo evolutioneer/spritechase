@@ -1,0 +1,24 @@
+@import 'www/app/webroot/css/boilerplate_before';
+
+@content-margin: 70px;
+@content-width: 590px; 
+	
+body
+{
+	background-color: #ddd;
+}
+
+#container
+{
+	width: @content-margin * 2 + @content-width;
+	margin: 0 auto;
+	background-color: #eee;
+}
+
+#content
+{
+	margin: 0px @content-margin;
+	width: @content-width;
+}
+
+@import 'www/app/webroot/css/boilerplate_after';

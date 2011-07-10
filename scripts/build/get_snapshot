@@ -12,4 +12,5 @@
 # 2011-07-01
 # evolutioneer at gmail dot com
 #
-find $1 -name "*.$2" | xargs ls -lA | grep -v "min.$2" | sed -e 's/[ \t]\+/\t/gi' | cut -f 6- | sed 's;^\(.\{10\}\)\t;\1_;gi'
+#find $1 -name "*.$2" | xargs ls -lA | grep -v "min.$2" | sed -e 's/[ \t]\+/\t/gi' | cut -f 6- | sed 's;^\(.\{10\}\)\t;\1_;gi'
+find $1 -name "*.$2" | xargs ls --time-style=+%s -lA | grep -v "min.$2" | sed -e 's/[ \t]\+/\t/gi' | cut -f 6-

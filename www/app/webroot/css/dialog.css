@@ -1,0 +1,72 @@
+#container {
+  background: url(../img/dialog_comp.png) top center no-repeat;
+  height: 1000px;
+  margin-top: 5px;
+}
+.dialog-top {
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.dialog-top * {
+  position: absolute;
+  opacity: 0.9;
+}
+.dialog-top .sprite.face {
+  width: 364px;
+  height: 372px;
+  top: 0px;
+  left: 0px;
+  background-color: #ff0;
+}
+.dialog-top .next.button {
+  width: 232px;
+  height: 232px;
+  top: 0px;
+  left: 364px;
+  background-color: #afa;
+}
+.dialog-top .lights {
+  width: 92px;
+  height: 140px;
+  top: 232px;
+  left: 364px;
+  background-color: #ff0;
+}
+.dialog-top .login.button {
+  width: 140px;
+  height: 140px;
+  top: 232px;
+  left: 456px;
+  background-color: #0f0;
+}
+.dialog-top .sprite.name {
+  width: 596px;
+  height: 60px;
+  top: 372px;
+  left: 0px;
+  background-color: #0ff;
+  color: #fff;
+  font: Courier sans-serif;
+  font-size: 24pt;
+  letter-spacing: 2px;
+}
+.dialog-top .sprite.name span {
+  padding-top: 10px;
+  padding-left: 36px;
+}
+.dialog-box {
+  position: relative;
+  top: 432px;
+  width: 596px;
+  background-color: #f99;
+  padding-top: 50px;
+  opacity: 0.9;
+}
+#dialog-wrapper {
+  width: 540px;
+  margin: 0 auto;
+}
+#data {
+  display: none;
+}

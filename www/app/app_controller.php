@@ -9,7 +9,7 @@ class AppController extends Controller
 	private $allow = array(
 		'/users/login' => true,
 		'/users/register' => true,
-		'/pages/intro' => true,
+		'/dialogs/intro' => true,
 		'/pages/about' => true,
 		'/pages/contact' => true
 	);
@@ -22,6 +22,6 @@ class AppController extends Controller
 		);
 		
 		$this->Auth->allow('*');
-		if(!$this->Auth->user() && !isset($this->allow[$this->here])) $this->redirect('/pages/intro');
+		if(!$this->Auth->user() && !isset($this->allow[$this->here])) $this->redirect('/dialogs/intro');
 	}
 }

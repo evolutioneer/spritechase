@@ -8,7 +8,7 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->css('style');
+		echo $this->Html->css('style.min');
 	    echo $this->Html->script('lib/jquery-1.6.1.min');
 		echo $scripts_for_layout;
 	?>
@@ -19,10 +19,7 @@
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $content_for_layout; ?>
 		</div>
-		<div id="footer">
-		</div>
 	</div>
-	<?php echo $this->Html->script('lib/modernizr-2.0.min'); ?>
 	<?php echo $this->Html->script('lib/modernizr-2.0.min'); ?>
 	<?php echo $this->element('sql_dump'); ?>
 </body>
