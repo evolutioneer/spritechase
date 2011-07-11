@@ -105,8 +105,12 @@ body.landscape .dialog-screen {
   width: 116px;
   height: 116px;
   background-image: url(../img/dialog/next_button.png);
-  background-position: bottom left;
+  background-position: top left;
   background-repeat: no-repeat;
+}
+.dialog-top .next.button.disabled {
+  background-position: bottom left;
+  cursor: auto;
 }
 .dialog-top .lights {
   width: 48px;
@@ -161,4 +165,31 @@ body.landscape .dialog-screen {
 }
 #data {
   display: none;
+}
+.button {
+  cursor: pointer;
+  user-enabled: false;
+  -webkit-user-enabled: false;
+  -moz-user-enabled: false;
+}
+.dialog.button {
+  padding: 10px;
+  margin: 4px;
+  border: 2px solid green;
+  color: green;
+  background: #9f9;
+}
+.dialog.button.red {
+  border: 2px solid red;
+  color: red;
+  background: #f99;
+}
+.dialog.button.yellow {
+  border: 2px solid #994;
+  color: #994;
+  background: #ff9;
+}
+.instructions {
+  color: #ccc;
+  font-style: italic;
 }
