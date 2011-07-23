@@ -173,6 +173,8 @@ body.landscape .dialog-screen {
 .button {
   cursor: pointer;
   user-enabled: false;
+  padding: 0px;
+  margin: 0px;
   -webkit-user-enabled: false;
   -moz-user-enabled: false;
 }

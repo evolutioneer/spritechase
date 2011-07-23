@@ -42,6 +42,15 @@ a
 	padding-bottom: 1px;
 }
 
+.header
+{
+	text-align: center;
+	font-weight: bold;
+	border-top: 2px dashed @light-gray;
+	margin-top: 30px;
+	padding: 8px;
+}
+
 #container
 {
 	display: none;
