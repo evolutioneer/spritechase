@@ -7,20 +7,29 @@
 		text-align: center;
 		font-size: 12pt;
 		color: #fff;
-	}	
+	}
+	
+	.header
+	{
+		text-align: center;
+		font-weight: bold;
+		border-top: 2px dashed @light-gray;
+		margin-top: 30px;
+		padding: 8px;
+	}
 }
 
 .parts.items
 {
 	.item
 	{
-		position: relative;
+		/*position: relative;
 		border: solid white;
 		background-color: @light-gray;
 		border-width: 1px 0px 0px 1px;
 		margin-bottom: 8px;
 		padding-bottom: 1px;
-		min-height: 80px;
+		min-height: 80px;*/
 	
 		.slug
 		{

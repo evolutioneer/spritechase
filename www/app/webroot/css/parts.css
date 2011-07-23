@@ -1,16 +1,30 @@
+.button {
+  margin: 4px;
+  border: solid white;
+  border-width: 1px 3px 3px 1px;
+  background: #48565a;
+}
 #parts-page h2 {
   text-align: center;
   font-size: 12pt;
   color: #fff;
 }
+#parts-page .header {
+  text-align: center;
+  font-weight: bold;
+  border-top: 2px dashed #48565a;
+  margin-top: 30px;
+  padding: 8px;
+}
 .parts.items .item {
-  position: relative;
-  border: solid white;
-  background-color: #48565a;
-  border-width: 1px 0px 0px 1px;
-  margin-bottom: 8px;
-  padding-bottom: 1px;
-  min-height: 80px;
+  /*position: relative;
+		border: solid white;
+		background-color: @light-gray;
+		border-width: 1px 0px 0px 1px;
+		margin-bottom: 8px;
+		padding-bottom: 1px;
+		min-height: 80px;*/
+
 }
 .parts.items .item .slug {
   display: block;

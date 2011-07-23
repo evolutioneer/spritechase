@@ -295,6 +295,12 @@ table {
    Primary styles
    Author: 
    ========================================================================== */
+.button {
+  margin: 4px;
+  border: solid white;
+  border-width: 1px 3px 3px 1px;
+  background: #48565a;
+}
 body {
   background-color: #384448;
   -webkit-user-select: none;
@@ -313,6 +319,15 @@ a {
   text-decoration: none;
   color: #efffc4;
 }
+.item {
+  position: relative;
+  display: block;
+  border: solid white;
+  background-color: #48565a;
+  border-width: 1px 0px 0px 1px;
+  margin-bottom: 8px;
+  padding-bottom: 1px;
+}
 #container {
   display: none;
   margin: 0 auto;
@@ -328,6 +343,25 @@ a {
 #content {
   margin: 0;
   width: 295px;
+}
+#menu-title-bar .back.button {
+  float: left;
+  display: block;
+  width: 100px;
+  height: 40px;
+  background-image: url(../img/back_to_menu.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#menu-title-bar .title {
+  float: left;
+  width: 175px;
+  margin-top: 8px;
+  color: #5f7277;
+  font-weight: bold;
+  font-size: 24pt;
+  font-style: italic;
+  text-align: center;
 }
 .button {
   margin: 4px;

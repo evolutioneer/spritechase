@@ -5,13 +5,13 @@ $this->Html->css('parts.min', null, array('inline' => false));
 $this->Html->script('parts.min', array('inline' => false));
 
 ?>
-<?php echo $this->element('menu_title_bar', array('title' => 'Parts Inventory')); ?>
+<?php echo $this->element('menu_title_bar', array('title' => 'Parts')); ?>
 <div id="parts-page">
 	<?php if(isset($projectParts)): ?>
 	<?php
 		$roundPartsLeft = count($projectParts['Part']) - $foundCt;
 	?>
-	<div class="team-parts header">TEAM PLAY</div>
+	<div class="header">TEAM INVENTORY</div>
 	<h2>Your <?php echo $projectParts['Project']['name']; ?> Needs <?php echo $roundPartsLeft; ?> More Parts:</h2>
 	<div class="parts items">
 		<?php $capturedParts = array(); ?>
@@ -28,7 +28,7 @@ $this->Html->script('parts.min', array('inline' => false));
 		<?php endforeach; ?>
 	</div>
 	<?php endif; ?>
-	<div class="user-parts header">PERSONAL INVENTORY</div>
+	<div class="header">PERSONAL INVENTORY</div>
 	<h2>You Found <?php echo $partsCt; ?> out of 50 Parts</h2>
 	<div class="parts items">
 	<?php if(0 == count($userParts['Part'])):?>

@@ -30,7 +30,54 @@ class RoundsController extends AppController
 	 */
 	function index()
 	{
-		$this->redirect('/menus');
+		$this->loadModel('Project');
+		$this->Project->contain('Round');
+		$projects = $this->Project->find('all', array(
+			'fields' => array('id', 'name', 'desc', 'asset_thumb_url'),
+			'order' => 'name ASC'
+		));
+		
+		for($i = 0; $i < count($projects); $i++)
+		{
+			$rounds = $projects[$i]['Round'];
+			$started = 0;
+			$completed = 0;
+			
+			for($j = 0; $j < count($rounds); $j++)
+			{
+				$started++;
+				if($rounds[$j]['dt_completed'] > $rounds[$j]['dt_started']) $completed++;
+			}
+			
+			$projects[$i]['Project']['rounds_started'] = $started;
+			$projects[$i]['Project']['rounds_completed'] = $completed;
+			unset($projects[$i]['Round']);
+		}
+		
+		//$$testme count the number of parts in each project
+		$this->loadModel('PartsProject');
+		$partCtRS = $this->PartsProject->find('all', array(
+			'fields' => array('PartsProject.project_id, COUNT(PartsProject.part_id) AS part_ct'),
+			'group' => 'PartsProject.project_id'
+		));
+		
+		$projectPartCts = array();
+		for($i = 0; $i < count($partCtRS); $i++) $projectPartCts[$partCtRS[$i]['PartsProject']['project_id']] = $partCtRS[$i][0]['part_ct'];
+		$this->set('projectPartCts', $projectPartCts);
+		
+		//Set the project this user's team is currently playing, if any
+		if($this->Auth->user('current_round_id'))
+		{
+			$this->Round->contain('Project.name');
+			$currentProject = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Auth->user('current_round_id'))));
+			$elapsed = date_diff(new DateTime('now'), new DateTime($currentProject['Round']['dt_started']));
+			$elapsed = $elapsed->format('%d days, %h hours, %i minutes, %s seconds');
+			$elapsed = str_replace(array('0 days, ', '0 hours, ', '0 minutes, '), '', $elapsed);
+			$currentProject['Project']['elapsed'] = $elapsed;
+			$this->set('currentProject', $currentProject);
+		}
+		
+		$this->set('projects', $projects);
 	}
 	
 	/**
@@ -93,31 +140,7 @@ class RoundsController extends AppController
 			}
 		}
 		
-		$this->loadModel('Project');
-		$this->Project->contain('Round');
-		$projects = $this->Project->find('all', array(
-			'fields' => array('id', 'name', 'desc', 'asset_thumb_url'),
-			'order' => 'name ASC'
-		));
-		
-		for($i = 0; $i < count($projects); $i++)
-		{
-			$rounds = $projects[$i]['Round'];
-			$started = 0;
-			$completed = 0;
-			
-			for($j = 0; $j < count($rounds); $j++)
-			{
-				$started++;
-				if($rounds[$j]['dt_completed'] > $rounds[$j]['dt_started']) $completed++;
-			}
-			
-			$projects[$i]['Project']['rounds_started'] = $started;
-			$projects[$i]['Project']['rounds_completed'] = $completed;
-			unset($projects[$i]['Round']);
-		}
-		
-		$this->set('projects', $projects);
+		else $this->redirect('/rounds');
 	}
 	
 	/**

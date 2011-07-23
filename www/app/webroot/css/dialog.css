@@ -1,3 +1,9 @@
+.button {
+  margin: 4px;
+  border: solid white;
+  border-width: 1px 3px 3px 1px;
+  background: #48565a;
+}
 #container {
   margin-top: 2.5px;
 }
@@ -88,6 +94,9 @@ body.landscape .dialog-screen {
 }
 .dialog-top * {
   position: absolute;
+}
+.dialog-top .button {
+  border: 0px;
 }
 .dialog-top .sprite.face {
   width: 184px;

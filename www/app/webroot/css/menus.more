@@ -14,28 +14,3 @@
 		}	
 	}	
 }
-
-
-#menu-title-bar
-{
-	.back.button
-	{
-		float: left;
-		display: block;
-		width: 100px;
-		height: 40px;
-		background-image: url(../img/back_to_menu.gif);
-		background-position: center;
-		background-repeat: no-repeat;
-	}
-	
-	.title
-	{
-		float: left;
-		margin-top: 14px;
-		width: 175px;
-		font-size: 12pt;
-		font-style: italic;
-		text-align: center;
-	}
-}

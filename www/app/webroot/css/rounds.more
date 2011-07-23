@@ -1,58 +1,50 @@
+@import 'constants';
+
 #projects
 {
 	.items
 	{
 		.item
 		{
-			float: left;
-			border: 1px solid red;
-			
-			width: 100%;
-			height: auto;
-			
 			cursor: pointer;
 			user-enabled: false;
+		}
+		
+		.title
+		{
+			font-size: 18pt;
+			font-weight: bold;
+			margin: 5px;
+			width: 250px;
+			overflow:  hidden;
 			
-			.thumbnail
-			{
-				float: left;
-			}
-			
-			.title
-			{
-				font-size: 24pt;
-			}
-			
-			.description
-			{
-				font-size: 12pt;
-			}
-			   
-			.stats
-			{
-				float: right;
-				
-				.started, .completed
-				{
-					float: left;
-					border-radius: 8px;
-					padding: 10px;
-					margin: 3px;
-					box-shadow: 2px 3px 3px #ddd;
-				}
-				
-				.started
-				{
-					background-color: #ff0;
-					color: #000;
-				}
-			
-				.completed
-				{
-					background-color: #0f0;
-					color: #fff;
-				}
-			}
+		}
+		
+		.description
+		{
+			display: none;
+		}
+		
+		.stats
+		{
+			top: 0px;
+			right: 0px;
+			background: @bright-gray;
+		}
+		
+		.started, .completed, .part-ct
+		{
+			float: right;
+			color: #fff;
+			padding: 3px;
+			margin: 5px;
+			font-size: 12pt;
+		}
+		
+		.part-ct, .started
+		{
+			padding-right: 10px;
+			border-right: 1px solid @light-gray;
 		}
 	}
 }
@@ -73,22 +65,7 @@
 	
 	.button
 	{
-		cursor: pointer;
-		display: block;
-		float: left;
+		font-size: 14pt;
 		padding: 10px;
-		margin: 4px;
-		border-radius: 5px;
-		background-color: #999;
-	}
-	
-	.button:hover
-	{
-		background-color: #ff0;
-	}
-	
-	.button:active
-	{
-		background-color: #000;
 	}
 }

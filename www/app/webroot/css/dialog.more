@@ -146,6 +146,11 @@ body.landscape
 		position: absolute;
 	}
 	
+	.button
+	{
+		border: 0px;
+	}
+	
 	.sprite.face
 	{
 		width: @sprite-face-size;
