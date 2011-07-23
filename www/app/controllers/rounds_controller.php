@@ -5,6 +5,7 @@ class RoundsController extends AppController
 	var $name = 'Rounds';
 	var $adminActions = array();
 	var $uses = array('Round');
+	var $components = array('Session', 'Auth', 'Cookie', 'Messager');
 	
 	/**
 	 * 
@@ -37,7 +38,6 @@ class RoundsController extends AppController
 	 */
 	function start()
 	{
-		
 		if($this->data)
 		{
 			$currentRound = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Auth->user('current_round_id'))));
@@ -52,6 +52,7 @@ class RoundsController extends AppController
 			{
 				$this->loadModel('Team');
 				$this->loadModel('User');
+				$projectId = (0 . str_replace('project-', '', $this->data['Project']['id']));
 				
 				$this->Team->contain('User');
 				$teamAndUsers = $this->Team->find('first', array('conditions' => array('Team.id' => $this->Auth->user('team_id'))));
@@ -70,16 +71,25 @@ class RoundsController extends AppController
 				
 				debug($teamAndUsers);
 				
-				//$$testme save the current round ID to each user row in the team
+				//Save the current round ID to each user row in the team
 				for($i = 0; $i < count($teamAndUsers['User']); $i++)
 				{
 					$user = array('User' => array('id' => $teamAndUsers['User'][$i]['id'], 'current_round_id' => $round['Round']['id']));
 					$result = $this->User->save($user);
 				}
 				
-				//$$todo dispatch a message to each user of the team signaling that the round has started
 				$this->_refreshAuth();
-				//$this->redirect('/pages/round_started');
+				
+				//$$testme dispatch a message to each user of the team signaling that the round has started
+				$this->Messager->deliver(
+					'round_started',
+					json_encode(array('projectId' => $projectId)),
+					array('Team' => array('id' => $this->Auth->user('team_id')))
+				);
+				
+				//$$testme show the user the round start screen
+				$this->Session->write('Message.data', array('projectId' => $projectId));
+				$this->redirect('/dialogs/round_started');
 			}
 		}
 		

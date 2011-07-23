@@ -35,6 +35,7 @@ var DialogScreen = (function() {
 			changeSlide($(evt.target).attr('value'));
 		});
 		
+		currentSlideId = 'main-1';
 		changeSlide('main-1');
 	};
 	
@@ -43,10 +44,10 @@ var DialogScreen = (function() {
 	{
 		console.log('changeSlide(' + newSlideId + ')');
 		
-		//$$testme retrieve the data node for the new slide
+		//retrieve the data node for the new slide
 		var $slide = $('.slide.' + newSlideId);
 		
-		//$$debug what have we here?
+		//what have we here?
 		console.log('$slide: ' + $slide);
 		
 		if(!$slide.length)
@@ -55,7 +56,8 @@ var DialogScreen = (function() {
 			return;
 		}
 		
-		//$$testme clear the contents of the scroller
+		//clear the contents of the scroller
+		console.log("$dialogBox.children('.append').length: " + $dialogBox.children('.append').length);
 		$dialogBox.children().remove();
 		
 		skippableTextBuild = false;
@@ -70,9 +72,9 @@ var DialogScreen = (function() {
 		if($nextButtonTarget.length) nextButtonTargetId = $nextButtonTarget.attr('value');
 		else nextButtonTargetId = null;
 		
-		if(SlideUpdaters[newSlideId]) SlideUpdaters[newSlideId]($slide);
+		//if(SlideUpdaters && SlideUpdaters[newSlideId]) SlideUpdaters[newSlideId]($slide);
 		
-		//$$todo begin appending content in order
+		//begin appending content in order
 		var $toAppend = $('.append', $slide);
 		
 		$toAppend.each(function(i, elem) {
@@ -83,10 +85,13 @@ var DialogScreen = (function() {
 			{
 				skippableTextBuild = true;
 				updateNextButton();
-				appendText($('<div />').appendTo($dialogBox), $(elem).text());
+				appendText($('<div class="text" />').appendTo($dialogBox), $(elem).text());
 			}
 			
-			else $dialogBox.append($(elem).children());
+			else
+			{
+				$dialogBox.append($(elem).get(0).cloneNode(true));
+			}
 		});
 	};
 	
@@ -95,11 +100,14 @@ var DialogScreen = (function() {
 	{
 		var $container = $appendTarget.append($('<div class="text-build" />'));
 		var nibble;
-		textBuildInterval = setInterval(function() {
-			if(skipTextBuild || text == '')
-			{
-				$container.append(text);
-				clearInterval(textBuildInterval);
+		var nibbleCursor = 0;
+		
+		this.textBuildInterval = setInterval(function() {
+			if(skipTextBuild || nibbleCursor == text.length)
+			{ 
+				clearInterval(this.textBuildInterval);
+				console.log('+++ skipTextBuild: ' + skipTextBuild + '; nibbleCursor: ' + nibbleCursor + '; text.length: ' + text.length);
+				$container.text(text);
 				skippableTextBuild = false;
 				skipTextBuild = false;
 				updateNextButton();
@@ -107,8 +115,7 @@ var DialogScreen = (function() {
 			
 			else
 			{
-				nibble = text.substring(0, 1);
-				text = text.substring(1);
+				nibble = text.substring(nibbleCursor, ++nibbleCursor);
 				$container.append(nibble);
 			}
 			
