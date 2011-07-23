@@ -1,3 +1,5 @@
+@import 'constants';
+
 #parts-page
 {
 	h2
@@ -12,15 +14,49 @@
 {
 	.item
 	{
+		position: relative;
+		border: solid white;
+		background-color: @light-gray;
+		border-width: 1px 0px 0px 1px;
+		margin-bottom: 8px;
+		min-height: 80px;
+	
+		.slug
+		{
+			position: relative;
+			display: block;
+			color: @foreground-green;
+		}
+		
+		.thumbnail
+		{
+			position: absolute;
+			width: 48px;
+			height: 48px;
+			top: 0px;
+			left: 0px;
+			border: 2px solid @light-gray;
+			background: #fff;
+		}
+		
 		.title
 		{
-			display: block;
-			border: 1px solid white;
+			position: absolute;
+			top: 11px;
+			left: 65px;
+			margin-top: 5px;
+			font-size: 14pt;
+			font-style: italic;
+			font-weight: bold;
 		}
-	
+		
 		.body
 		{
-			display: none;
+			//display: none;
+			position: relative;
+			top: 52px;
+			left: 0px;
+			margin: 5px;
 		}
 		
 		.body.open
@@ -31,6 +67,11 @@
 	
 	.item.found
 	{
-		border: 1px solid green;
+		background: url(../img/found.gif) 230px 50px no-repeat @midground-green;
+		
+		.thumbnail
+		{
+			border-color: @midground-green;
+		}
 	}
 }

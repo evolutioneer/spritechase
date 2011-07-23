@@ -1,4 +1,5 @@
 var myScroll;
+var SlideUpdaters = SlideUpdaters || {};
 
 var DialogScreen = (function() {
 	
@@ -28,7 +29,6 @@ var DialogScreen = (function() {
 				myScroll.refresh();
 			}, 100);
 		});
-		$.reorient.start();
 		
 		//$$todo bind a screen change handler to all screen change buttons
 		$('.dialog.button').live('click', function(evt) {
@@ -72,7 +72,7 @@ var DialogScreen = (function() {
 		if($nextButtonTarget.length) nextButtonTargetId = $nextButtonTarget.attr('value');
 		else nextButtonTargetId = null;
 		
-		//if(SlideUpdaters && SlideUpdaters[newSlideId]) SlideUpdaters[newSlideId]($slide);
+		if(SlideUpdaters && SlideUpdaters[newSlideId]) SlideUpdaters[newSlideId]($slide);
 		
 		//begin appending content in order
 		var $toAppend = $('.append', $slide);

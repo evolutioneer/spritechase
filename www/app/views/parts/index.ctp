@@ -17,9 +17,11 @@ $this->Html->script('parts.min', array('inline' => false));
 		<?php $capturedParts = array(); ?>
 		<?php foreach($projectParts['Part'] as $i => $part): ?>
 		<div class="item <?php echo ($part['found'] ? ' found' : ''); ?>">
-			<a class="title button"><?php echo $part['name']; ?></a>
+			<a class="slug">
+				<div class="thumbnail"><?php echo $this->Html->image('icons/' . $part['asset_thumb_url'] . '.gif'); ?></div>
+				<div class="title"><?php echo $part['name']; ?></div>
+			</a>
 			<div class="body">
-				<div class="thumbnail"></div>
 				<div class="desc"><?php echo $part['desc']; ?></div>
 			</div>
 		</div>
@@ -34,9 +36,11 @@ $this->Html->script('parts.min', array('inline' => false));
 	<?php else: ?>
 		<?php foreach($userParts['Part'] as $i => $part): ?>
 			<div class="item">
-				<a class="title button"><?php echo $part['name']; ?></a>
+				<a class="slug">
+					<div class="thumbnail"><?php echo $this->Html->image('icons/' . $part['asset_thumb_url'] . '.gif'); ?></div>
+					<div class="title"><?php echo $part['name']; ?></div>
+				</a>
 				<div class="body">
-					<div class="thumbnail"></div>
 					<div class="desc"><?php echo $part['desc']; ?></div>
 				</div>
 			</div>

@@ -62,6 +62,7 @@
 	    echo $this->Html->script('lib/iscroll.min');
 	    echo $this->Html->script('lib/modernizr-2.0.min');
 	    echo $this->Html->script('dialog.min');
+	    echo $this->Html->script('common.min');
 		echo $scripts_for_layout;
 	?>
 	<?php echo $this->element('sql_dump'); ?>

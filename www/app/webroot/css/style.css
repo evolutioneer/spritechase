@@ -299,6 +299,7 @@ body {
   background-color: #384448;
   -webkit-user-select: none;
   -webkit-text-size-adjust: none;
+  color: #fff;
 }
 body.portrait {
   background-image: url(../img/dialog/screen_background_portrait.png);
@@ -308,18 +309,34 @@ body.portrait {
 body.landscape {
   background: url(../img/dialog/screen_background_landscape.png) middle center repeat-y;
 }
+a {
+  text-decoration: none;
+  color: #efffc4;
+}
 #container {
+  display: none;
   margin: 0 auto;
 }
 .portrait #container {
+  display: block;
   width: 295px;
 }
 .landscape #container {
+  display: block;
   width: 460px;
 }
 #content {
   margin: 0;
   width: 295px;
+}
+.button {
+  margin: 4px;
+  border: solid white;
+  border-width: 1px 3px 3px 1px;
+  background: #48565a;
+}
+.clear {
+  clear: both;
 }
 /* =============================================================================
    Non-semantic helper classes

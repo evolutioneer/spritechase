@@ -9,7 +9,8 @@
 	<?php
 		echo $this->Html->meta('icon');
 		echo $this->Html->css('style.min');
-		echo $this->Html->css('dialog.min');
+		//echo $this->Html->css('dialog.min');
+		echo $this->Html->css('menus.min');
 	?>
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 	 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -27,8 +28,9 @@
 	    echo $this->Html->script('lib/reorient.min');
 	    echo $this->Html->script('lib/iscroll.min');
 	    echo $this->Html->script('lib/modernizr-2.0.min');
+	    echo $this->Html->script('common.min');
 		echo $scripts_for_layout;
 	?> 
 	<?php if(Configure::read('debug')) echo $this->element('sql_dump'); ?>
 </body>
-</html> 
+</html>
