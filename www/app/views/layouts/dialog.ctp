@@ -36,10 +36,10 @@
 				<div class="row-2">
 					<div class="sprite name"><span>
 						<?php 
-							//$$debug let's set a sprite name to see how it looks
+							/*//$$debug let's set a sprite name to see how it looks
 							$spriteName = 'Commander Irmo';
 							if(!isset($spriteName)) $spriteName = '???';
-							echo $spriteName;
+							echo $spriteName;*/
 						?>
 					</span></div>
 				</div>

@@ -1,13 +1,12 @@
 <?php $this->Html->css('rounds.min', null, array('inline' => false)); ?>
-<?php echo $this->Html->script('lib/jquery.ba-hashchange.min'); ?>
-<?php echo $this->Html->script('rounds.min'); ?>
+<?php echo $this->Html->script('rounds.min', array('inline' => false)); ?>
 <h2>START A NEW ROUND</h2>
 <div id="projects">
 	<div class="items">
 		<?php for($i = 0; $i < count($projects); $i++): 
 			$row = $projects[$i]['Project'];
 		?>
-		<a class="item" id="<?php echo $row['id']; ?>">
+		<a class="item" id="project-<?php echo $row['id']; ?>">
 			<img class="thumbnail" width="100" height="100" src="<?php echo $row['asset_thumb_url']; ?>" />
 			<div class="title"><?php echo $row['name']; ?></div>
 			<div class="description"><?php echo $row['desc']; ?></div>

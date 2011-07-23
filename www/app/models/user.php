@@ -23,7 +23,7 @@ class User extends AppModel
         )
     );
     var $belongsTo = array('Team');
-    var $hasMany = array('Part');
+    var $hasAndBelongsToMany = array('Part');
     
     /**
      * 

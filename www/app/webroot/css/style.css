@@ -300,6 +300,14 @@ body {
   -webkit-user-select: none;
   -webkit-text-size-adjust: none;
 }
+body.portrait {
+  background-image: url(../img/dialog/screen_background_portrait.png);
+  background-position: center;
+  background-repeat: repeat-y;
+}
+body.landscape {
+  background: url(../img/dialog/screen_background_landscape.png) middle center repeat-y;
+}
 #container {
   margin: 0 auto;
 }

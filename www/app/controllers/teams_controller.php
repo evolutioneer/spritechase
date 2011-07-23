@@ -13,6 +13,7 @@ class TeamsController extends AppController
 		//update each given user by setting their team IDs to the new row created by this process
 		if($this->data)
 		{
+			$this->data['Team']['dt_start'] = date('Y-m-d H:i:s');
 			$team = $this->Team->save($this->data);
 			
 			if(!$team)
@@ -41,7 +42,11 @@ class TeamsController extends AppController
 					}
 				}
 				
-				if($success) $this->redirect('/pages/team_registration_successful');
+				if($success)
+				{
+					$this->_refreshAuth();
+					$this->redirect('/pages/team_registration_successful');
+				}
 			}
 		}
 		

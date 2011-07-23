@@ -9,18 +9,26 @@
 	<?php
 		echo $this->Html->meta('icon');
 		echo $this->Html->css('style.min');
-	    echo $this->Html->script('lib/jquery-1.6.1.min');
-		echo $scripts_for_layout;
+		echo $this->Html->css('dialog.min');
 	?>
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+	 <meta name="apple-mobile-web-app-capable" content="yes" />
+	 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
-<body>
+<body class="no-orientation">
 	<div id="container">
-		<div id="content">
-			<?php echo $this->Session->flash(); ?>
+		<div id="content" class="dialog">
 			<?php echo $content_for_layout; ?>
 		</div>
 	</div>
-	<?php echo $this->Html->script('lib/modernizr-2.0.min'); ?>
-	<?php echo $this->element('sql_dump'); ?>
+	<?php 
+	    echo $this->Html->script('lib/zepto/zepto.min');
+	    echo $this->Html->script('lib/zepto/event.min');
+	    echo $this->Html->script('lib/reorient.min');
+	    echo $this->Html->script('lib/iscroll.min');
+	    echo $this->Html->script('lib/modernizr-2.0.min');
+		echo $scripts_for_layout;
+	?> 
+	<?php if(Configure::read('debug')) echo $this->element('sql_dump'); ?>
 </body>
-</html>
+</html> 

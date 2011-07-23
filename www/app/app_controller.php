@@ -21,7 +21,25 @@ class AppController extends Controller
 			'password' => 'password'
 		);
 		
-		$this->Auth->allow('*');
+		//$this->Auth->allow('*');
 		if(!$this->Auth->user() && !isset($this->allow[$this->here])) $this->redirect('/dialogs/intro');
+	}
+	
+	/**
+	 * Refreshes the Auth session
+	 * @param string $field
+	 * @param string $value
+	 * @return void 
+	 */
+	function _refreshAuth($field = '', $value = '') {
+		if (!empty($field) && !empty($value)) { 
+			$this->Session->write($this->Auth->sessionKey .'.'. $field, $value);
+		} else {
+			if (isset($this->User)) {
+				$this->Auth->login($this->User->read(false, $this->Auth->user('id')));
+			} else {
+				$this->Auth->login(ClassRegistry::init('User')->findById($this->Auth->user('id')));
+			}
+		}
 	}
 }

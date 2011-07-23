@@ -1,0 +1,36 @@
+#parts-page
+{
+	h2
+	{
+		text-align: center;
+		font-size: 12pt;
+		color: #fff;
+	}	
+}
+
+.parts.items
+{
+	.item
+	{
+		.title
+		{
+			display: block;
+			border: 1px solid white;
+		}
+	
+		.body
+		{
+			display: none;
+		}
+		
+		.body.open
+		{
+			display: block;
+		}
+	}
+	
+	.item.found
+	{
+		border: 1px solid green;
+	}
+}

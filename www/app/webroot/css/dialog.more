@@ -32,10 +32,6 @@ body.no-orientation
 
 body.portrait
 {
-	background-image: url(../img/dialog/screen_background_portrait.png);
-	background-position: center;
-	background-repeat: repeat-y;
-	
 	#container
 	{
 		height: @scale-factor * 960px;

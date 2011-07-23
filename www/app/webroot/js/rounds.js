@@ -1,27 +1,39 @@
 var Round = (function()
 {
-	
+	var hash;
+	var hashInterval;
 	var selectionId;
 	
 	var init = function()
 	{
+		confirmWindow.init();
+		
+		hash = window.location.hash;
+		hashInterval = setInterval('Round.checkHash()', 250);
+		
 		$('.item').each(function(i, elem) {
 			$(elem).attr('href', '#start/' + $(elem).attr('id'));
 		});
-		
-		$(window).bind('hashchange', confirm);
-		confirmWindow.init();
 	};
 	
 	var confirm = function()
 	{
-		selectionId = location.hash.match(/#start\/(.*)/)[1];
+		selectionId = window.location.hash.match(/#start\/(.*)/)[1];
 		confirmWindow.show();
 	};
 	
 	var cancel = function()
 	{
 		
+	};
+	
+	var checkHash = function()
+	{
+		if(window.location.hash != hash)
+		{
+			hash = window.location.hash;
+			confirm();
+		}
 	};
 	
 	var confirmWindow = (function()
@@ -32,7 +44,7 @@ var Round = (function()
 		{
 			$elem = $('#confirm-window');
 			$elem.find('.confirm.button').bind('click', confirm);
-			$elem.find('.cancel.button').bind('click', function(evt) {
+			$elem.find('.cancel.button').bind('click', function(evt) { 
 				hide();
 			});
 		};
@@ -41,6 +53,7 @@ var Round = (function()
 		var show = function()
 		{
 			var projectName = $('#' + selectionId).find('.title').text();
+			console.log('projectName: ' + projectName);
 			$elem.find('.selection').text(projectName);
 			$elem.css('display', 'block');
 		};
@@ -69,10 +82,9 @@ var Round = (function()
 	return {
 		init: init,
 		confirm: confirm,
-		cancel: cancel
-	}
+		cancel: cancel,
+		checkHash: checkHash
+	};
 })();
 
-$(document).ready(function() {
-	Round.init();
-});
+$(document).ready(Round.init);

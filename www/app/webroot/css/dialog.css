@@ -13,11 +13,6 @@ body.no-orientation .dialog-screen {
 body.no-orientation .loading {
   display: block;
 }
-body.portrait {
-  background-image: url(../img/dialog/screen_background_portrait.png);
-  background-position: center;
-  background-repeat: repeat-y;
-}
 body.portrait #container {
   height: 480px;
 }

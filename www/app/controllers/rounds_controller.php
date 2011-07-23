@@ -3,9 +3,8 @@
 class RoundsController extends AppController
 {
 	var $name = 'Rounds';
-	var $adminActions = array(
-		'stop'
-	);
+	var $adminActions = array();
+	var $uses = array('Round');
 	
 	/**
 	 * 
@@ -30,7 +29,7 @@ class RoundsController extends AppController
 	 */
 	function index()
 	{
-		//$$todo tell the user about their current round of play
+		$this->redirect('/menus');
 	}
 	
 	/**
@@ -45,8 +44,8 @@ class RoundsController extends AppController
 			
 			if(!empty($currentRound))
 			{
-				$this->Session->setFlash('You can\'t start a new round;  you are playing one now!');
-				$this->redirect('/round');
+				//Can't start another round while playing one already
+				$this->redirect('/menus');
 			}
 			
 			else
@@ -55,28 +54,31 @@ class RoundsController extends AppController
 				$this->loadModel('User');
 				
 				$this->Team->contain('User');
-				$teamAndUsers = $this->Team->find('first', array('conditions' => array('id' => $this->Auth->user('team_id'))));
+				$teamAndUsers = $this->Team->find('first', array('conditions' => array('Team.id' => $this->Auth->user('team_id'))));
+				
+				debug($this->data);
 				
 				$this->Round->create();
 				$this->Round->save(array(
 					'team_id' => $this->Auth->user('team_id'),
-					'project_id' => $this->data['Project']['id'],
+					'project_id' => (0 . str_replace('project-', '', $this->data['Project']['id'])),
 					'dt_started' => date('Y-m-d H:i:s')
 				));
 				
 				$this->Round->contain();
 				$round = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Round->getLastInsertID())));
 				
+				debug($teamAndUsers);
+				
 				//$$testme save the current round ID to each user row in the team
 				for($i = 0; $i < count($teamAndUsers['User']); $i++)
 				{
-					$teamAndUsers['User'][$i]['current_round_id'] = $round['Round']['id'];
-					$this->User->save($teamAndUsers['User'][$i]);
+					$user = array('User' => array('id' => $teamAndUsers['User'][$i]['id'], 'current_round_id' => $round['Round']['id']));
+					$result = $this->User->save($user);
 				}
 				
-				//$$todo create and pouplate the round; save the round id to each user's data
 				//$$todo dispatch a message to each user of the team signaling that the round has started
-				
+				$this->_refreshAuth();
 				//$this->redirect('/pages/round_started');
 			}
 		}
@@ -111,8 +113,45 @@ class RoundsController extends AppController
 	/**
 	 *
 	 */
-	function stop($id)
+	function stop($confirmed = null)
 	{
-		//$$todo force terminate the round of play (admins only)
+		if(!$this->Auth->user('current_round_id'))
+		{
+			if(!$this->Auth->user('team_id'))
+			{
+				$this->render('/pages/no_team');
+			}
+			
+			else $this->redirect('/rounds/start');
+		}
+		
+		if(!$confirmed)
+		{
+			$this->render();
+			return;
+		}
+		
+		//$$testme force terminate the round of play for the team
+		$this->loadModel('User');
+		$this->User->contain();
+		$roundUsers = $this->User->find('all', array('conditions' => array('current_round_id' => $this->Auth->user('current_round_id'))));
+		
+		debug($roundUsers);
+		
+		for($i = 0; $i < count($roundUsers); $i++)
+		{
+			$roundUsers[$i]['User']['current_round_id'] = null;
+			$this->User->save($roundUsers[$i]['User']);
+		}
+		
+		debug($this->Session->read('Auth.user'));
+		$this->Session->write('Auth.user.current_round_id', null);
+		
+		$round = $this->Round->find('first', array('fields' => array('id', 'dt_canceled'), array('conditions' => array('id' => $this->Auth->user('current_round_id')))));
+		$round['Round']['dt_canceled'] = date('Y-m-d H:i:s');
+		$this->Round->save($round);
+		
+		$this->_refreshAuth();
+		$this->render('/pages/round_stopped');
 	}
 }

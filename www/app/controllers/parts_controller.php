@@ -26,10 +26,76 @@ class PartsController extends AppController
 	{
 		if(isset($this->adminActions[$this->action]))
 		{
-			return $this->Auth->user('role') == admin;
+			return $this->Auth->user('role') == 'admin';
 		}
 		
 		return true;
+	}
+	
+	/**
+	 *
+	 */
+	function index()
+	{
+		$this->_refreshAuth();
+		$userId = $this->Auth->user('id');
+		
+		$this->loadModel('User');
+		$this->User->contain('Part');
+		
+		$userParts = $this->User->find('first', array('id' => $userId));
+		if(count($userParts['Part'])) $userParts['Part'] = sortByKey($userParts['Part'], 'name');
+		$this->set('userParts', $userParts);
+		
+		if($userParts['User']['current_round_id'] != null)
+		{
+			//The user has an active round.  Retrieve the list of parts still needed by their team
+			$this->loadModel('Round');
+			$this->loadModel('Project');
+			$this->Round->contain('Part');
+			
+			$roundPartsRS = $this->Round->find('first', array(
+				'conditions' => array('id' => $userParts['User']['current_round_id'])
+			));
+			
+			$roundPartIDs = array();
+			for($i = 0; $i < count($roundPartsRS['Part']); $i++) array_push($roundPartIDs, $roundPartsRS['Part'][$i]['id']);
+			$roundPartIDs = array_flip($roundPartIDs);
+			
+			$this->Project->contain('Part');
+			$projectParts = $this->Project->find('first', array(
+				'fields' => array('id', 'name'),
+				'conditions' => array(
+					'id' => $roundPartsRS['Round']['project_id']
+				)
+			));
+			
+			//Figure out exactly which parts have been captured, which have not, and sort
+			$foundCt = 0;
+			
+			for($i = 0; $i < count($projectParts['Part']); $i++)
+			{
+				if(isset($roundPartIDs[$projectParts['Part'][$i]['id']]))
+				{
+					$projectParts['Part'][$i]['found'] = 1;
+					$foundCt++;
+				}
+				
+				else
+				{
+					$projectParts['Part'][$i]['found'] = 0;
+				}
+			}
+			sortByKey($projectParts['Part'], 'name');
+			sortByKey($projectParts['Part'], 'found');
+			
+			//debug($roundPartsRS);
+			//debug($roundPartIDs);
+			//debug($projectParts);
+			
+			$this->set('foundCt', $foundCt);
+			$this->set('projectParts', $projectParts);
+		}
 	}
 	
 	/**
@@ -74,7 +140,11 @@ class PartsController extends AppController
 			$this->ProjectsUser->delete($projectsUser[$i]['ProjectsUser']['id']);
 		}
 		
+		$this->loadModel('PartsRound');
+		$partsRound = $this->PartsRound->deleteAll(array('round_id' => $this->Auth->user('current_round_id')));
+		
 		$this->Session->setFlash('User inventory and projects cleared.');
+		$this->_refreshAuth();
 		$this->redirect('/parts/viewall');
 	}
 	
@@ -107,8 +177,6 @@ class PartsController extends AppController
 		$newPartUser = false;
 		$newPartRound = false;
 		
-		//Let the cron job handle the leaderboard shifts...  Traffic on this method would incur too many transactions to handle it here.
-		
 		//If the user is on a team, add a row for this part to TeamParts table if the part didn't exist
 		if(!empty($roundId))
 		{
@@ -131,6 +199,7 @@ class PartsController extends AppController
 					'dt_found' => date('Y-m-d H:i:s'),
 					'ct' => 1
 				));
+				
 				$this->PartsRound->save($partsRound);
 				$newPartsRound = true;
 			}
@@ -139,6 +208,53 @@ class PartsController extends AppController
 			{
 				$partsRound['PartsRound']['ct']++;
 				$this->PartsRound->save($partsRound);
+			}
+			
+			//If the user has scanned the last necessary part for their project, generate the appropriate events
+			$this->loadModel('Project');
+			$this->Project->contain('Part');
+			$projectPartIDs = $this->Project->find('first', array('conditions' => array('id' => $round['Round']['project_id'])));
+			
+			//Get the IDs of all the parts found in this round
+			$this->Round->contain('Part.id');
+			$roundPartIDs = $this->Round->find('first', array('conditions' => array('id' => $roundId)));
+			$foundIDs = array();
+			for($i = 0; $i < count($roundPartIDs['Part']); $i++) $foundIDs[$roundPartIDs['Part'][$i]['id']] = true;
+			
+			//Identify the parts that remain to be found.  They will be set and used in the sprite dialog for this part.
+			$remainingParts = array();
+			for($i = 0; $i < count($projectPartIDs['Part']); $i++)
+			{
+				if(!isset($foundIDs[$projectPartIDs['Part'][$i]['id']]))
+				{
+					array_push($remainingParts, $projectPartIDs['Part'][$i]);
+				}
+			}
+			
+			//debug($roundPartIDs);
+			//debug($projectPartIDs);
+			//debug('++++++++++++++');
+			//debug($remainingParts);
+			//debug('?????????????? remainingCt: ' . count($remainingParts));
+			
+			//If all parts for the project have been found, save the round as completed, send a message to all teammates, and remove the round ID from all teammates
+			if(count($remainingParts) == 0)
+			{
+				//$$todo proceed with the hullaballoo
+				$this->loadModel('User');
+				$this->User->contain();
+				$teammates = $this->User->find('all', array('conditions' => array('current_round_id' => $round['Round']['id'])));
+				
+				for($i = 0; $i < count($teammates); $i++)
+				{
+					//$$todo send a message to each teammate
+					$teammates[$i]['User']['current_round_id'] = null;
+					$this->User->save($teammates[$i]['User']);
+				}
+				
+				//Update the state of the round
+				$round['Round']['dt_completed'] = date('Y-m-d H:i:s');
+				$this->Round->save($round);
 			}
 		}
 		
@@ -176,5 +292,7 @@ class PartsController extends AppController
 		$this->set('part', $part);
 		$this->set('userTotal', $partsUser['PartsUser']['ct']);
 		$this->set('roundTotal', (empty($roundId) ? 0 : $partsRound['PartsRound']['ct']));
+		
+		$this->_refreshAuth();
 	}
 }
