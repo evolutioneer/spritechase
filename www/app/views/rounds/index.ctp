@@ -5,9 +5,18 @@
 	<?php //$$todo if the user is playing a round, let them know here.  If not, say the same. ?>
 	<?php if(isset($currentProject)): ?>
 		<div class="header">TEAM PROJECT</div>
-		<p>Your team has pursued the <?php echo $currentProject['Project']['name']; ?> for <?php echo $currentProject['Project']['elapsed']; ?>.<br/>Your team can only pursue one project at once.  If you selecting another project below, you will cancel the current round and begin your new search.</p>
+		<div class="instructions"><p>Your team has pursued the <?php echo $currentProject['Project']['name']; ?> for <?php echo $currentProject['Project']['elapsed']; ?>.<br/>Your team can only pursue one project at once.  If you selecting another project below, you will cancel the current round and begin your new search.</p></div>
 	<?php else: ?>
+		<div class="header">SOLO PLAY</div>
+		<div class="instructions"><p>You are not currently pursuing a team project.  Visit the i3Detroit booth to learn more about team play.</p></div>		
 	<?php endif; ?>
+	<div class="instructions">
+		<ul>
+			<li><span class="em">Parts</span>: how many are needed</li>
+			<li><span class="em">Teams</span>: how many are seeking the project</li>
+			<li><span class="em">Wins</span>: how many times the project has been built</li>
+		</ul>
+	</div>
 	<div class="items">
 		<?php for($i = 0; $i < count($projects); $i++): 
 			$row = $projects[$i]['Project'];

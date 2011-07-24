@@ -77,6 +77,8 @@ a
 
 #menu-title-bar
 {
+	margin-bottom: 20px;
+	
 	.back.button
 	{
 		float: left;
@@ -107,6 +109,18 @@ a
 	border: solid white;
 	border-width: 1px 3px 3px 1px;
 	background: #48565a;
+}
+
+ul
+{
+	list-style: none;
+	padding: 0px 0px 0px 10px;	
+}
+
+.em
+{
+	font-weight: bold;
+	color: @foreground-green;	
 }
 
 .clear

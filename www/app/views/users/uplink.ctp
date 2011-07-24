@@ -1,5 +1,5 @@
-<h2>UPLINK PAGE</h2>
- <img src="<?php echo $markerURL; ?>" width="400" height="400" />
- <p class="instructions">If you are having difficulty establishing an uplink with your uplink marker, 
- you can call the Inspiration Station's phone number and enter this message when prompted:</p>
- <p class="code"><?php echo $markerCode; ?></p>
+<?php $this->Html->css('messages.min', null, array('inline' => false)); ?>
+<?php echo $this->element('menu_title_bar', array('title' => 'Uplink')); ?>
+<img src="<?php echo $markerURL; ?>" width="400" height="400" />
+<div class="header">UNDER CONSTRUCTION</div>
+<div class="instructions"><p>The uplink marker page is currently under construction.</p></div>

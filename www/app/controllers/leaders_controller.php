@@ -3,7 +3,8 @@
 class LeadersController extends AppController
 {
 	var $name = 'Leaders';
-	var $uses = array('Leader', 'Cron', 'CronLog', 'Message', 'SocialShare');	
+	//var $uses = array('Leader', 'Cron', 'CronLog', 'Message', 'SocialShare');	
+	var $uses = array();
 	/**
 	 * Show a view of all combined leaderboards
 	 */

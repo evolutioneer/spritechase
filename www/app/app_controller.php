@@ -6,23 +6,29 @@ class AppController extends Controller
 {
 	var $components = array('Auth', 'Cookie', 'Session');
 	
-	private $allow = array(
+	/*private $allow = array(
 		'/users/login' => true,
 		'/users/register' => true,
 		'/dialogs/intro' => true,
 		'/pages/about' => true,
-		'/pages/contact' => true
-	);
+		'/pages/contact' => true,
+		'/menus' => true
+	);*/
 	
 	function beforeFilter()
 	{
+		App::import('Sanitize');
+		
 		$this->Auth->fields = array(
 			'username' => 'name',
 			'password' => 'password'
 		);
 		
+		$this->Auth->loginRedirect = array('controller' => 'menus', 'action' => 'index');
+		$this->Auth->logoutRedirect = array('controller' => 'menus', 'action' => 'index');
+		
 		//$this->Auth->allow('*');
-		if(!$this->Auth->user() && !isset($this->allow[$this->here])) $this->redirect('/dialogs/intro');
+		//if(!$this->Auth->user() && !isset($this->allow[$this->here])) $this->redirect('/menus');
 	}
 	
 	/**

@@ -1,0 +1,14 @@
+@import 'constants';
+
+#messages
+{
+	.item
+	{
+		background: @bright-gray;
+	}
+	
+	.item.opened
+	{
+		background: @light-gray;
+	}
+} 

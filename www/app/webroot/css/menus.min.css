@@ -1,1 +1,1 @@
-#home .main-menu .item{display:block;width:100%;padding:5px;border:2px solid #fff;background:#333;color:#fff;text-decoration:none}
+#home .main-title{background:url(../img/menu_title.gif) center no-repeat;width:290px;height:108px;margin:20px 0}#home .main-menu .item{display:block;text-decoration:none;font-size:16pt;font-style:italic;padding:6px;background-image:url(../img/view.gif);background-position:right;background-repeat:no-repeat}#landing .disabled{color:#5f7277}#landing .feedback{color:#f99}#landing .feedback.valid{color:#efffc4}#landing .feedback.neutral{color:#fff}

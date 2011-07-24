@@ -43,7 +43,7 @@ class PartsController extends AppController
 		$this->loadModel('User');
 		$this->User->contain('Part');
 		
-		$userParts = $this->User->find('first', array('id' => $userId));
+		$userParts = $this->User->find('first', array('conditions' => array('User.id' => $userId)));
 		if(count($userParts['Part'])) $userParts['Part'] = sortByKey($userParts['Part'], 'name');
 		$this->set('userParts', $userParts);
 		

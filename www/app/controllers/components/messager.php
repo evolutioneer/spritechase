@@ -18,47 +18,42 @@ class MessagerComponent extends Object
 	/**
 	 * $$testme Generate a message and deliver it to the users with the given IDs
 	 */
-	function deliver($messageDialog, $messageData, $recipients)
+	function deliver($messageDialog, $messageData, $messageTitle, $recipients, $redirect = false)
 	{
 		$this->controller->loadModel('Message');
+		$dtOpened = $redirect ? date('Y-m-d H:i:s') : 0;
 		
 		if(isset($recipients['Team']))
 		{
-			//$$testme send to a team
+			//Send to a team
 			$this->controller->Message->save(array('Message' => array(
 				'team_id' => $recipients['Team']['id'],
 				'data' => json_encode($messageData),
 				'dialog' => $messageDialog,
-				'dt_sent' => date('Y-m-d H:i:s')
+				'title' => $messageTitle,
+				'dt_sent' => date('Y-m-d H:i:s'),
+				'dt_opened' => $dtOpened
 			)));
 		}
 		
-		if(isset($recipients['User']))
+		if(isset($recipients['User']['id']))
 		{
-			if(count($recipients['User']))
-			{
-				//$$testme send in a loop
-				for($i = 0; $i < count($recipients['User']); $i++)
-				{
-					$this->controller->Message->save(array('Message' => array(
-						'user_id' => $recipients['User'][$i]['id'],
-						'data' => $messageData,
-						'dialog' => $messageDialog,
-						'dt_sent' => date('Y-m-d H:i:s')
-					)));
-				}
-			}
-			
-			else if(isset($recipients['User']['id']))
-			{
-				//$$testme send a single message
-				$this->controller->Message->save(array('Message' => array(
-					'user_id' => $recipients['User']['id'],
-					'data' => $messageData,
-					'dialog' => $messageDialog,
-					'dt_sent' => date('Y-m-d H:i:s')
-				)));
-			}
+			//$$testme send a single message
+			$this->controller->Message->save(array('Message' => array(
+				'user_id' => $recipients['User']['id'],
+				'data' => json_encode($messageData),
+				'dialog' => $messageDialog,
+				'title' => $messageTitle,
+				'dt_sent' => date('Y-m-d H:i:s'),
+				'dt_opened' => $dtOpened
+			)));
+		}
+		
+		//$$testme if redirect is passed, immediately deliver the message
+		if($redirect)
+		{
+			$this->controller->Session->write('Message.data', json_encode($messageData));
+			$this->controller->redirect('/dialogs/' . $messageDialog);
 		}
 	}
 }

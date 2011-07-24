@@ -92,7 +92,7 @@ class RoundsController extends AppController
 			if(!empty($currentRound))
 			{
 				//Can't start another round while playing one already
-				$this->redirect('/menus');
+				$this->redirect('/rounds/stop/0/' . $this->data['Project']['id']);
 			}
 			
 			else
@@ -128,15 +128,16 @@ class RoundsController extends AppController
 				$this->_refreshAuth();
 				
 				//$$testme dispatch a message to each user of the team signaling that the round has started
+				$this->loadModel('Project');
+				$project = $this->Project->find('first', array('conditions' => array('id' => $projectId)));
+				
 				$this->Messager->deliver(
 					'round_started',
-					json_encode(array('projectId' => $projectId)),
-					array('Team' => array('id' => $this->Auth->user('team_id')))
+					array('projectId' => $projectId),
+					'New Round: ' . $teamAndUsers['Team']['name'] . ' Seeks the ' . $project['Project']['name'],
+					array('Team' => array('id' => $this->Auth->user('team_id'))),
+					true
 				);
-				
-				//$$testme show the user the round start screen
-				$this->Session->write('Message.data', array('projectId' => $projectId));
-				$this->redirect('/dialogs/round_started');
 			}
 		}
 		
@@ -146,20 +147,22 @@ class RoundsController extends AppController
 	/**
 	 *
 	 */
-	function stop($confirmed = null)
+	function stop($confirmed = null, $projectId = null)
 	{
-		if(!$this->Auth->user('current_round_id'))
-		{
-			if(!$this->Auth->user('team_id'))
-			{
-				$this->render('/pages/no_team');
-			}
-			
-			else $this->redirect('/rounds/start');
-		}
+		if(!$this->Auth->user('current_round_id') || !$this->Auth->user('team_id')) $this->redirect('/rounds');
 		
 		if(!$confirmed)
 		{
+			$projectId = Sanitize::paranoid($projectId);
+			
+			if($projectId)
+			{
+				$this->loadModel('Project');
+				$project = $this->Project->find('first', array('conditions' => array('id' => $projectId)));
+				$this->set('project', $project);
+				//$$todo redirect to the rounds/start action with the correctly formatted data.  Perhaps rejigger rounds/start from POST data to GET.
+			}
+			
 			$this->render();
 			return;
 		}

@@ -295,12 +295,6 @@ table {
    Primary styles
    Author: 
    ========================================================================== */
-.button {
-  margin: 4px;
-  border: solid white;
-  border-width: 1px 3px 3px 1px;
-  background: #48565a;
-}
 body {
   background-color: #384448;
   -webkit-user-select: none;
@@ -351,6 +345,9 @@ a {
   margin: 0;
   width: 295px;
 }
+#menu-title-bar {
+  margin-bottom: 20px;
+}
 #menu-title-bar .back.button {
   float: left;
   display: block;
@@ -375,6 +372,14 @@ a {
   border: solid white;
   border-width: 1px 3px 3px 1px;
   background: #48565a;
+}
+ul {
+  list-style: none;
+  padding: 0px 0px 0px 10px;
+}
+.em {
+  font-weight: bold;
+  color: #efffc4;
 }
 .clear {
   clear: both;

@@ -32,7 +32,7 @@ $this->Html->script('parts.min', array('inline' => false));
 	<h2>You Found <?php echo $partsCt; ?> out of 50 Parts</h2>
 	<div class="parts items">
 	<?php if(0 == count($userParts['Part'])):?>
-		<div class="instructions">Start searching!</div>
+		<div class="instructions"><p>Collect project parts by scanning SpriteChase QR Codes all around Maker Faire:Detroit.  As you do, they will appear here.</p><p>When you collect enough to complete a project, visit a SpriteChase kiosk to see it!</p></div>
 	<?php else: ?>
 		<?php foreach($userParts['Part'] as $i => $part): ?>
 			<div class="item">

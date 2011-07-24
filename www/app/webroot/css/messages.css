@@ -1,0 +1,6 @@
+#messages .item {
+  background: #5f7277;
+}
+#messages .item.opened {
+  background: #48565a;
+}

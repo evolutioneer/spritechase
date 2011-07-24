@@ -5,12 +5,18 @@ class DialogsController extends AppController
 	var $name = 'Dialogs';
 	var $uses = array();
 	
+	/**
+	 * 
+	 */
 	function beforeFilter()
 	{
 		parent::beforeFilter();
 		$this->layout = 'dialog';
 	}
 	
+	/**
+	 * 
+	 */
 	function intro()
 	{
 		
@@ -21,9 +27,9 @@ class DialogsController extends AppController
 	 */
 	function round_started()
 	{
-		$data = $this->Session->read('Message.data');
+		$data = json_decode($this->Session->read('Message.data'));
 		
-		$projectId = $data['projectId'];
+		$projectId = $data->projectId;
 		$projectParts;
 		$projectName;
 		$partCt;
