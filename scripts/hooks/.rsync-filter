@@ -1,0 +1,5 @@
+# Ignore the root .htaccess file, as it varies across environments
+- /.htaccess
+
+# Add in any .htaccess files that occur in subfolders
++ **.htaccess

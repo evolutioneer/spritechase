@@ -13,5 +13,5 @@
 class Team extends AppModel
 {
 	var $name = 'Team';
-	var $hasMany = array('User', 'Message');
+	var $hasMany = array('User', 'Message', 'Round');
 }

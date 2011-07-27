@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# An example hook script that is called after a successful
+# commit is made.
+#
+# To enable this hook, rename this file to "post-commit".
+echo "POST-COMMIT: Rsync the application up to dev environment at dev.simplesites.com..."
+#rsync -vazh -f 'www/.htaccess' /var/www/simplesites.dev/www/ simple@simplesites.com:/home/simple/public_html/dev/
+rsync -vazhFF /var/www/simplesites.dev/www/ simple@simplesites.com:/home/simple/public_html/dev/
+rsync -vazhFF /var/www/simplesites.dev/schema/ simple@simplesites.com:/home/simple/schema/
+echo "POST-COMMIT: Rsync complete."

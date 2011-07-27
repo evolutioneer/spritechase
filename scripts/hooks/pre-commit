@@ -1,0 +1,9 @@
+#!/bin/bash
+# Pre-commit script to dump the schema to the repository and add it.
+echo "PRE-COMMIT: Dumping dev instance of test database 'spritech_db' to schema/spritech_db.dev.sql..."
+mysqldump --user=spritech_db --password='mKq5ST3ssA6EnsVIf' spritech_db  >  schema/spritech_db.dev.sql
+git add schema/spritech_db.dev.sql
+echo "PRE-COMMIT: spritech_db dump complete."
+#echo "PRE-COMMIT: Compiling *.more files to *.css files with lessc..."
+#find . -name "*.more" | sed 's;\(.*\).more;lessc \1.more > \1.css;'
+#echo "PRE-COMMIT: ... *.more to *.css file compilation complete."
