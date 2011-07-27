@@ -225,7 +225,7 @@ CREATE TABLE `projects` (
   `name` varchar(128) NOT NULL,
   `desc` varchar(512) NOT NULL,
   `asset_thumb_url` varchar(128) NOT NULL,
-  `asset_3d_url` varchar(128) NOT NULL,
+  `asset_id` varchar(128) NOT NULL,
   `ar_marker_id` varchar(8) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
@@ -238,7 +238,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'Life-Sized Mouse Trap','Empty Description','','',''),(2,'Maker Bot','Empty Description','','',''),(3,'Coke and Mentos','Empty Description','','',''),(4,'Cupcake Car','Empty Description','','',''),(5,'Waterfall Swing','Empty Description','','',''),(6,'FIRST Robot','Empty Description','','',''),(7,'Compressed Air Rocket','Empty Description','','',''),(8,'Twinkie Car','Empty Description','','',''),(9,'Fire-Breathing Red Green','Empty Description','','',''),(10,'Giant Lego Chess','Empty Description','','',''),(11,'Learn to Solder Badge','Empty Description','','',''),(12,'Cigar Box Guitar','Empty Description','','',''),(13,'Circuit Bent Casio','Empty Description','','',''),(14,'Quadcopter','Empty Description','','',''),(15,'Chronotune','Empty Description','','',''),(16,'Open Soda','Empty Description','','',''),(17,'Gigantic Puppet Head','Empty Description','','',''),(18,'Hackerspace','Empty Description','','',''),(19,'Power Wheels Racer','Empty Description','','',''),(20,'Talking Teddy Bear','Empty Description','','','');
+INSERT INTO `projects` VALUES (1,'Life-Sized Mouse Trap','Empty Description','','mousetrap',''),(2,'Maker Bot','Empty Description','','maker_bot',''),(3,'Coke and Mentos','Empty Description','','coke_mentos',''),(4,'Cupcake Car','Empty Description','','cupcake_car',''),(5,'Waterfall Swing','Empty Description','','waterfall_swing',''),(6,'FIRST Robot','Empty Description','','first_robot',''),(7,'Compressed Air Rocket','Empty Description','','air_rocket',''),(8,'Twinkie Car','Empty Description','','twinkie_car',''),(9,'Fire-Breathing Red Green','Empty Description','','red_green',''),(10,'Giant Lego Chess','Empty Description','','lego_chess',''),(11,'Learn to Solder Badge','Empty Description','','solder_badge',''),(12,'Cigar Box Guitar','Empty Description','','cigar_box_guitar',''),(13,'Circuit Bent Casio','Empty Description','','circuit_bent_casio',''),(14,'Quadcopter','Empty Description','','quadcopter',''),(15,'Chronotune','Empty Description','','chronotune',''),(16,'Open Soda','Empty Description','','open_soda',''),(17,'Gigantic Puppet Head','Empty Description','','gigantic_puppet_head',''),(18,'Hackerspace','Empty Description','','hackerspace',''),(19,'Power Wheels Racer','Empty Description','','power_wheels',''),(20,'Talking Teddy Bear','Empty Description','','teddy_bear','');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,12 +278,14 @@ DROP TABLE IF EXISTS `rounds`;
 CREATE TABLE `rounds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `team_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `dt_started` datetime NOT NULL,
   `dt_completed` datetime NOT NULL,
   `dt_canceled` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `team_id` (`team_id`,`project_id`)
+  KEY `team_id` (`team_id`,`project_id`),
+  KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -293,7 +295,7 @@ CREATE TABLE `rounds` (
 
 LOCK TABLES `rounds` WRITE;
 /*!40000 ALTER TABLE `rounds` DISABLE KEYS */;
-INSERT INTO `rounds` VALUES (33,32,13,'2011-07-23 19:10:08','0000-00-00 00:00:00','2011-07-23 20:15:43'),(32,32,3,'2011-07-23 18:44:57','0000-00-00 00:00:00','2011-07-23 19:08:42'),(31,32,4,'2011-07-23 15:46:36','0000-00-00 00:00:00','2011-07-23 18:44:11'),(30,32,17,'2011-07-23 13:12:06','2011-07-23 15:19:44','0000-00-00 00:00:00'),(29,32,15,'2011-07-23 02:52:48','2011-07-23 13:08:42','0000-00-00 00:00:00'),(28,32,15,'2011-07-23 02:51:40','0000-00-00 00:00:00','2011-07-23 02:52:41'),(27,32,12,'2011-07-23 02:37:47','0000-00-00 00:00:00','2011-07-23 02:51:31'),(26,32,13,'2011-07-23 01:18:55','2011-07-23 01:40:06','0000-00-00 00:00:00'),(25,32,3,'2011-07-23 00:41:00','0000-00-00 00:00:00','2011-07-23 01:18:25'),(34,32,7,'2011-07-23 19:35:29','0000-00-00 00:00:00','0000-00-00 00:00:00'),(35,32,6,'2011-07-23 19:39:17','0000-00-00 00:00:00','0000-00-00 00:00:00'),(36,32,10,'2011-07-23 19:39:59','0000-00-00 00:00:00','0000-00-00 00:00:00'),(37,32,6,'2011-07-23 19:49:52','0000-00-00 00:00:00','0000-00-00 00:00:00'),(38,32,3,'2011-07-23 20:14:09','0000-00-00 00:00:00','0000-00-00 00:00:00'),(39,32,4,'2011-07-23 20:16:35','0000-00-00 00:00:00','0000-00-00 00:00:00'),(40,0,13,'2011-07-24 14:30:20','0000-00-00 00:00:00','0000-00-00 00:00:00'),(41,0,9,'2011-07-24 15:00:47','0000-00-00 00:00:00','0000-00-00 00:00:00');
+INSERT INTO `rounds` VALUES (33,32,0,13,'2011-07-23 19:10:08','0000-00-00 00:00:00','2011-07-23 20:15:43'),(32,32,0,3,'2011-07-23 18:44:57','0000-00-00 00:00:00','2011-07-23 19:08:42'),(31,32,0,4,'2011-07-23 15:46:36','0000-00-00 00:00:00','2011-07-23 18:44:11'),(30,32,0,17,'2011-07-23 13:12:06','2011-07-23 15:19:44','0000-00-00 00:00:00'),(29,32,0,15,'2011-07-23 02:52:48','2011-07-23 13:08:42','0000-00-00 00:00:00'),(28,32,0,15,'2011-07-23 02:51:40','0000-00-00 00:00:00','2011-07-23 02:52:41'),(27,32,0,12,'2011-07-23 02:37:47','0000-00-00 00:00:00','2011-07-23 02:51:31'),(26,32,0,13,'2011-07-23 01:18:55','2011-07-23 01:40:06','0000-00-00 00:00:00'),(25,32,0,3,'2011-07-23 00:41:00','0000-00-00 00:00:00','2011-07-23 01:18:25'),(34,32,0,7,'2011-07-23 19:35:29','0000-00-00 00:00:00','0000-00-00 00:00:00'),(35,32,0,6,'2011-07-23 19:39:17','0000-00-00 00:00:00','0000-00-00 00:00:00'),(36,32,0,10,'2011-07-23 19:39:59','0000-00-00 00:00:00','0000-00-00 00:00:00'),(37,32,0,6,'2011-07-23 19:49:52','0000-00-00 00:00:00','0000-00-00 00:00:00'),(38,32,0,3,'2011-07-23 20:14:09','0000-00-00 00:00:00','0000-00-00 00:00:00'),(39,32,0,4,'2011-07-23 20:16:35','0000-00-00 00:00:00','0000-00-00 00:00:00'),(40,0,0,13,'2011-07-24 14:30:20','0000-00-00 00:00:00','0000-00-00 00:00:00'),(41,0,0,9,'2011-07-24 15:00:47','0000-00-00 00:00:00','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,4 +418,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-26  9:33:40
+-- Dump completed on 2011-07-27 13:25:06
