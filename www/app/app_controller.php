@@ -24,11 +24,8 @@ class AppController extends Controller
 			'password' => 'password'
 		);
 		
-		$this->Auth->loginRedirect = array('controller' => 'menus', 'action' => 'index');
-		$this->Auth->logoutRedirect = array('controller' => 'menus', 'action' => 'index');
-		
-		//$this->Auth->allow('*');
-		//if(!$this->Auth->user() && !isset($this->allow[$this->here])) $this->redirect('/menus');
+		$this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'login');
+		$this->Auth->authError = 'Please log in or register to play!';
 	}
 	
 	/**

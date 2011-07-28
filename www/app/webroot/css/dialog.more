@@ -156,9 +156,15 @@ body.landscape
 		width: @sprite-face-size;
 		height: @sprite-face-size;
 		background-image: url(../img/dialog/sprite_face.png);
-		background-position: center;
+		background-position: top left;
 		background-repeat: no-repeat;
 	}
+	
+	.sprite.face.talking
+	{
+		background-position: bottom left;
+	}
+	
 	
 	.next.button
 	{

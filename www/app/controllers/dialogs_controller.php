@@ -12,6 +12,7 @@ class DialogsController extends AppController
 	{
 		parent::beforeFilter();
 		$this->layout = 'dialog';
+		$this->Auth->allow('intro');
 	}
 	
 	/**

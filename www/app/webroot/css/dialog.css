@@ -96,8 +96,11 @@ body.landscape .dialog-screen {
   width: 184px;
   height: 184px;
   background-image: url(../img/dialog/sprite_face.png);
-  background-position: center;
+  background-position: top left;
   background-repeat: no-repeat;
+}
+.dialog-top .sprite.face.talking {
+  background-position: bottom left;
 }
 .dialog-top .next.button {
   width: 116px;

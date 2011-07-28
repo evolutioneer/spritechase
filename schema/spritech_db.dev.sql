@@ -127,7 +127,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
-INSERT INTO `parts` VALUES (1,'Air Tank','And you thought we couldn\'t fit any more hot air into this game.  Boy, were you wrong!','airtank','123',''),(2,'Ball','It\'s all fun and games until someone loses a ball.  And now it\'s yours!','ball','234',''),(4,'Bath Tub','Empty Description','bathtub','12456',''),(5,'Battery','Empty Description','battery','47323',''),(6,'Bowling Ball','Empty Description','bowlingball','17178',''),(7,'Cardboard','Empty Description','cardboard','85319',''),(8,'Casio Keyboard','Empty Description','keyboard','21495',''),(9,'Chess Board','Empty Description','chessboard','78802',''),(10,'Chicken Wire','Empty Description','chickenwire','71719',''),(11,'Cigar Box','Empty Description','cigarbox','42041',''),(12,'Circuit Board','Empty Description','circuitboard','95559',''),(13,'CO2 Tank','Empty Description','co2','89348',''),(14,'Coke','Empty Description','coke','76966',''),(15,'Duct Tape','Empty Description','ducttape','85951',''),(16,'Fabric','Empty Description','fabric','15626',''),(17,'Flavoring','Empty Description','flavoring','18383',''),(18,'Foam','Empty Description','foam','25903',''),(19,'Gear','Empty Description','gear','13634',''),(20,'Go Kart','Empty Description','gokart','40795',''),(21,'Kids Power Wheel','Empty Description','powerwheels','54590',''),(22,'LED','Empty Description','LED','12655',''),(23,'Lego Blocks','Empty Description','legoblock','76734',''),(24,'Lego Mindstorm','Empty Description','legomindstorm','48346',''),(25,'Mentos','Empty Description','mentos','51875',''),(26,'Metal','Empty Description','metal','78073',''),(27,'Motor','Empty Description','motor','57758',''),(28,'Paper','Empty Description','paper','17689',''),(29,'Pipe','Empty Description','pipe','18799',''),(30,'Plastic','Empty Description','plastic','83983',''),(31,'Potentiometer','Empty Description','pot','85318',''),(32,'Printer','Empty Description','printer','41937',''),(33,'Propane','Empty Description','propane','46555',''),(34,'Propeller','Empty Description','propeller','90026',''),(35,'Pump','Empty Description','pump','95954',''),(36,'Solder','Empty Description','solder','81306',''),(37,'Speaker','Empty Description','speaker','97847',''),(38,'Spring','Empty Description','spring','47191',''),(39,'String','Empty Description','string','33418',''),(40,'Sugar','Empty Description','sugar','96605',''),(41,'Teddy Bear','Empty Description','teddybear','64700',''),(42,'Tubing','Empty Description','tubing','89215',''),(43,'Twinkie','Empty Description','twinkies','21078',''),(44,'Water','Empty Description','water','50892',''),(45,'Wire','Empty Description','wire','51460',''),(46,'Wood','Empty Description','wood','26237',''),(47,'Members','Empty Description','','68408',''),(48,'Property','Empty Description','','28418',''),(49,'Community','Empty Description','','86361',''),(50,'Arduino','Empty Description','circuitboard','92032',''),(51,'Air Cannon','Empty Description','','58045','');
+INSERT INTO `parts` VALUES (1,'Air Tank','And you thought we couldn\'t fit any more hot air into this game.  Boy, were you wrong!','airtank','91905',''),(2,'Ball','It\'s all fun and games until someone loses a ball.  And now it\'s yours!','ball','13843',''),(4,'Bath Tub','Empty Description','bathtub','12456',''),(5,'Battery','Empty Description','battery','47323',''),(6,'Bowling Ball','Empty Description','bowlingball','17178',''),(7,'Cardboard','Empty Description','cardboard','85319',''),(8,'Casio Keyboard','Empty Description','keyboard','21495',''),(9,'Chess Board','Empty Description','chessboard','78802',''),(10,'Chicken Wire','Empty Description','chickenwire','71719',''),(11,'Cigar Box','Empty Description','cigarbox','42041',''),(12,'Circuit Board','Empty Description','circuitboard','95559',''),(13,'CO2 Tank','Empty Description','co2','89348',''),(14,'Coke','Empty Description','coke','76966',''),(15,'Duct Tape','Empty Description','ducttape','85951',''),(16,'Fabric','Empty Description','fabric','15626',''),(17,'Flavoring','Empty Description','flavoring','18383',''),(18,'Foam','Empty Description','foam','25903',''),(19,'Gear','Empty Description','gear','13634',''),(20,'Go Kart','Empty Description','gokart','40795',''),(21,'Kids Power Wheel','Empty Description','powerwheels','54590',''),(22,'LED','Empty Description','LED','12655',''),(23,'Lego Blocks','Empty Description','legoblock','76734',''),(24,'Lego Mindstorm','Empty Description','legomindstorm','48346',''),(25,'Mentos','Empty Description','mentos','51875',''),(26,'Metal','Empty Description','metal','78073',''),(27,'Motor','Empty Description','motor','57758',''),(28,'Paper','Empty Description','paper','17689',''),(29,'Pipe','Empty Description','pipe','18799',''),(30,'Plastic','Empty Description','plastic','83983',''),(31,'Potentiometer','Empty Description','pot','85318',''),(32,'Printer','Empty Description','printer','41937',''),(33,'Propane','Empty Description','propane','46555',''),(34,'Propeller','Empty Description','propeller','90026',''),(35,'Pump','Empty Description','pump','95954',''),(36,'Solder','Empty Description','solder','81306',''),(37,'Speaker','Empty Description','speaker','97847',''),(38,'Spring','Empty Description','spring','47191',''),(39,'String','Empty Description','string','33418',''),(40,'Sugar','Empty Description','sugar','96605',''),(41,'Teddy Bear','Empty Description','teddybear','64700',''),(42,'Tubing','Empty Description','tubing','89215',''),(43,'Twinkie','Empty Description','twinkies','21078',''),(44,'Water','Empty Description','water','50892',''),(45,'Wire','Empty Description','wire','51460',''),(46,'Wood','Empty Description','wood','26237',''),(47,'Members','Empty Description','','68408',''),(48,'Property','Empty Description','','28418',''),(49,'Community','Empty Description','','86361',''),(50,'Arduino','Empty Description','circuitboard','92032',''),(51,'Air Cannon','Empty Description','','58045','');
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +172,7 @@ CREATE TABLE `parts_rounds` (
   `ct` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `team_id` (`round_id`,`part_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +181,7 @@ CREATE TABLE `parts_rounds` (
 
 LOCK TABLES `parts_rounds` WRITE;
 /*!40000 ALTER TABLE `parts_rounds` DISABLE KEYS */;
-INSERT INTO `parts_rounds` VALUES (33,29,46,'2011-07-23 16:08:42',1),(34,30,16,'2011-07-23 17:39:57',1),(26,26,36,'2011-07-23 04:39:21',1),(25,26,31,'2011-07-23 04:39:10',1),(24,26,8,'2011-07-23 04:38:54',1),(23,26,50,'2011-07-23 04:38:08',2),(32,29,37,'2011-07-23 16:08:29',1),(31,29,32,'2011-07-23 16:08:08',1),(30,29,12,'2011-07-23 16:07:52',1),(29,29,50,'2011-07-23 16:07:19',1),(28,26,45,'2011-07-23 04:40:06',1),(27,26,51,'2011-07-23 04:39:55',1),(35,30,42,'2011-07-23 18:19:29',1),(36,30,18,'2011-07-23 18:19:44',1);
+INSERT INTO `parts_rounds` VALUES (33,29,46,'2011-07-23 16:08:42',1),(34,30,16,'2011-07-23 17:39:57',1),(26,26,36,'2011-07-23 04:39:21',1),(25,26,31,'2011-07-23 04:39:10',1),(24,26,8,'2011-07-23 04:38:54',1),(23,26,50,'2011-07-23 04:38:08',2),(32,29,37,'2011-07-23 16:08:29',1),(31,29,32,'2011-07-23 16:08:08',1),(30,29,12,'2011-07-23 16:07:52',1),(29,29,50,'2011-07-23 16:07:19',1),(28,26,45,'2011-07-23 04:40:06',1),(27,26,51,'2011-07-23 04:39:55',1),(35,30,42,'2011-07-23 18:19:29',1),(36,30,18,'2011-07-23 18:19:44',1),(37,39,14,'2011-07-28 01:35:46',1);
 /*!40000 ALTER TABLE `parts_rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +200,7 @@ CREATE TABLE `parts_users` (
   `ct` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `part_id` (`part_id`,`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ CREATE TABLE `parts_users` (
 
 LOCK TABLES `parts_users` WRITE;
 /*!40000 ALTER TABLE `parts_users` DISABLE KEYS */;
-INSERT INTO `parts_users` VALUES (8,1,8,'2011-06-24 04:07:33',4),(7,2,8,'2011-06-24 04:01:31',2),(9,1,11,'2011-06-29 22:12:56',1),(10,1,13,'2011-06-30 00:44:36',1),(11,1,16,'2011-07-04 13:28:11',1),(49,32,18,'2011-07-23 16:08:08',1),(48,12,18,'2011-07-23 16:07:52',1),(47,45,18,'2011-07-23 04:40:06',1),(46,51,18,'2011-07-23 04:39:55',1),(45,36,18,'2011-07-23 04:39:21',1),(44,31,18,'2011-07-23 04:39:10',1),(43,8,18,'2011-07-23 04:38:54',1),(42,50,18,'2011-07-23 04:38:08',3),(50,37,18,'2011-07-23 16:08:29',1),(51,46,18,'2011-07-23 16:08:42',1),(52,16,18,'2011-07-23 17:39:57',1),(53,42,18,'2011-07-23 18:19:29',1),(54,18,18,'2011-07-23 18:19:44',1);
+INSERT INTO `parts_users` VALUES (8,1,8,'2011-06-24 04:07:33',4),(7,2,8,'2011-06-24 04:01:31',2),(9,1,11,'2011-06-29 22:12:56',1),(10,1,13,'2011-06-30 00:44:36',1),(11,1,16,'2011-07-04 13:28:11',1),(49,32,18,'2011-07-23 16:08:08',1),(48,12,18,'2011-07-23 16:07:52',1),(47,45,18,'2011-07-23 04:40:06',1),(46,51,18,'2011-07-23 04:39:55',1),(45,36,18,'2011-07-23 04:39:21',1),(44,31,18,'2011-07-23 04:39:10',1),(43,8,18,'2011-07-23 04:38:54',1),(42,50,18,'2011-07-23 04:38:08',3),(50,37,18,'2011-07-23 16:08:29',1),(51,46,18,'2011-07-23 16:08:42',1),(52,16,18,'2011-07-23 17:39:57',1),(53,42,18,'2011-07-23 18:19:29',1),(54,18,18,'2011-07-23 18:19:44',1),(55,14,18,'2011-07-28 01:35:46',1);
 /*!40000 ALTER TABLE `parts_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -418,4 +418,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-27 13:25:06
+-- Dump completed on 2011-07-28  6:29:44

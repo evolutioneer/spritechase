@@ -30,6 +30,15 @@ a
 	color: @foreground-green;
 }	
 
+a:visited
+{
+	color: @foreground-green;	
+}
+
+a:active
+{
+	color: white;	
+}
 
 .item
 {

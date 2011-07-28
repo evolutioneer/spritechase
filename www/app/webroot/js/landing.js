@@ -22,6 +22,26 @@ var Landing = (function() {
 		$('#register-email').bind('blur', onRegisterEmailBlur);
 		$registerSubmit.bind('click', onRegisterSubmit);
 		$loginSubmit.bind('click', onLoginSubmit);
+		
+		$('#login-name').bind('blur', onLoginBlur);
+		$('#login-password').bind('blur', onLoginBlur);
+	};
+	
+	// ------------------------------------------------------------------------
+	var onLoginBlur = function(evt)
+	{
+		debug('onLoginBlur()');
+		debug('name: "' + 
+				$('#login-name').attr('value') + '", pass: "' + 
+				$('#login-password').attr('value') + '"');
+		
+		if($('#login-name').attr('value') && $('#login-password').attr('value'))
+		{
+			debug('++++ Eh, good enough');
+			$loginSubmit.removeClass('disabled');
+		}
+		
+		else $loginSubmit.addClass('disabled');
 	};
 	
 	// ------------------------------------------------------------------------

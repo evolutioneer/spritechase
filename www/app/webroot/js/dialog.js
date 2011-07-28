@@ -12,6 +12,8 @@ var DialogScreen = (function() {
 	var skippableTextBuild = false;
 	var skipTextBuild = false;
 	var textBuildInterval;
+	var gumFlapInterval = 5;
+	var gumFlapCt = 0;
 	
 	// ------------------------------------------------------------------------
 	var init = function()
@@ -63,10 +65,10 @@ var DialogScreen = (function() {
 		skippableTextBuild = false;
 		
 		var $faceData = $('.face', $slide);
-		if($faceData) updateFace($faceData.attr('value'));
+		if($faceData.length) updateFace($faceData.attr('value'));
 		
 		var $nameData = $('.name', $slide);
-		if($nameData) updateName($nameData.attr('value'));
+		if($nameData.length) updateName($nameData.attr('value'));
 		
 		var $nextButtonTarget = $('.next-button-target', $slide);
 		if($nextButtonTarget.length) nextButtonTargetId = $nextButtonTarget.attr('value');
@@ -111,12 +113,23 @@ var DialogScreen = (function() {
 				skippableTextBuild = false;
 				skipTextBuild = false;
 				updateNextButton();
+				
+				//$$testme close the mouth when finished
+				if($face.hasClass('talking')) $face.removeClass('talking'); 
 			}
 			
 			else
 			{
 				nibble = text.substring(nibbleCursor, ++nibbleCursor);
 				$container.append(nibble);
+				
+				//$$testme flap those gums!
+				gumFlapCt++;
+				if(gumFlapCt == gumFlapInterval)
+				{
+					gumFlapCt = 0;
+					$face.toggleClass('talking');
+				}
 			}
 			
 		}, 50);
@@ -126,12 +139,19 @@ var DialogScreen = (function() {
 	var updateName = function(name)
 	{
 		$name.text(name);
-	}
+	};
 	
 	// ------------------------------------------------------------------------
 	var updateFace = function(faceId)
 	{
-		console.log('[NOT IMPLEMENTED] updateFace(' + faceId + ')');
+		//$$testme update the face based on data provided in the dialog slide
+		console.log('updateFace(' + faceId + ')');
+		if(faceId)
+		{
+			$face
+				.css('background-image', 'url(/img/dialog/' + faceId + '.gif)');
+		}
+		
 	};
 	
 	// ------------------------------------------------------------------------

@@ -313,6 +313,12 @@ a {
   text-decoration: none;
   color: #efffc4;
 }
+a:visited {
+  color: #efffc4;
+}
+a:active {
+  color: white;
+}
 .item {
   position: relative;
   display: block;

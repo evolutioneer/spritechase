@@ -4,7 +4,7 @@
 var sys = require('sys');
 var exec = require('child_process').exec;
 var fs = require('fs');
-var less = require('/usr/local/lib/node_modules/less');
+var less = require('/usr/lib/node_modules/less');
 
 var CompyTable = (function() {
 	var path = 'scripts/build/yuicompress_table.json';
@@ -20,7 +20,7 @@ var Compy = (function()
 { 
 	//Shell path variables
 	var getSnapshotPath = 'scripts/build/get_snapshot';
-	var yuiCompressorPath = 'java -jar /var/www/lib/yuicompressor/build/yuicompressor-2.4.7pre.jar';
+	var yuiCompressorPath = 'java -jar /var/www/lib/yui/yuicompressor/build/yuicompressor-2.4.7pre.jar';
 	
 	//Application vars
 

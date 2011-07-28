@@ -1,6 +1,6 @@
 <?php $this->Html->css('menus.min', null, array('inline' => false));?>
 <div id="home">
-	<div class="main-title"></div>
+	<div class="menu-title"></div>
 	<div class="main-menu">
 		<div class="items">
 			<a class="item button" href="/messages">Messages</a>
