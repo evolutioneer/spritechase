@@ -2,6 +2,12 @@
   cursor: pointer;
   user-enabled: false;
 }
+#projects .items .item .body {
+  display: none;
+}
+#projects .items .item.open .body {
+  display: block;
+}
 #projects .items .title {
   font-size: 18pt;
   font-weight: bold;

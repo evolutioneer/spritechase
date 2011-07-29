@@ -1,7 +1,9 @@
 <?php echo $this->element('menu_title_bar', array('title' => 'Confirm')); ?>
-<div class="header"><?php if(isset($project)) echo 'START NEW ROUND'; else echo 'STOP ROUND'?></div>
-<?php if(isset($project)): ?>
-<p>You have selected the <?php echo $project['Project']['name']; ?> as your team's new target project.</p>
-<?php endif; ?>
+<?php $this->Html->script('rounds_stop.min', array('inline' => false)); ?>
+<div class="header">CANCEL HUNT</div>
 <p>Are you sure?  All progress on your current project will be lost.</p>
-<a class="button" href="/rounds/stop/1<?php if($project) echo $project['Project']['id']; ?>">Confirm</a>
+<a class="button" id="submit-button" >Confirm</a>
+<form id="form" method="post" action="/rounds/stop">
+	<input type="hidden" name="data[confirmed]" value="true" />
+	<input type="hidden" name="data[secret]" value="<?php echo $secret; ?>" />
+</form>

@@ -5,6 +5,8 @@
 $greeting = array(
 	'Let\'s chat, sport.',
 	'Okay, chief.',
+	'Howdy, Skipper.',
+	'Alrighty, Squire.',
 	'Simmer down, there.',
 	'Buckle up your safety belt.',
 	'Let\'s get down to brass tacks.',
@@ -45,46 +47,39 @@ $myGreeting = $greeting[floor(rand(0, count($greeting)))];
 $myUnderstand = $understand[floor(rand(0, count($understand)))];
 $myGoodbye = $goodbye[round(floor(0, count($goodbye)))];
 
+$teammatesMessage = '';
+if(isset($teammates)) $teammatesMessage = 'Oh, and don\'t forget about your teammates - work together to find those parts!';
+
 ?>
 <div class="slide main-1">
-	<div class="face" value="commander"></div>
-	<div class="name" value="Commander MacFunky"></div>
+	<div class="face" value="irmo"></div>
+	<div class="name" value="Funky Pants"></div>
 	<div class="next-button-target" value="main-2"></div>
-	<div class="append text"><?php echo $myGreeting; ?>  It's time to start your next mission.</div>
+	<div class="append text"><?php echo $myGreeting; ?>  It's time for you to start a new Maker Faire project for me.</div>
 </div>
 <div class="slide main-2">
 	<div class="next-button-target" value="main-3"></div>
-	<div class="append text">Because you picked the <span class="em"><?php echo $projectName; ?></span>, you need to find a total of <span class="em"><?php echo $partCt; ?></span> parts.</div>
+	<div class="append text">Because you picked the <span class="em"><?php echo $projectName; ?></span>, you need to find a total of <span class="em"><?php echo $partCt; ?></span> parts.  They are:
+	<?php 
+		$listString = '';
+	
+		for($i = 0; $i < count($projectParts['Part']) - 1; $i++)
+		{
+			$listString .= $projectParts['Part'][$i]['name'] . ', ';
+		}
+		
+		$listString = substr($listString, 0, strlen($listString) - 2) . ' and ' . $projectParts['Part'][$i]['name'] . '.';
+		echo $listString;
+	?>
+	</div>
 </div>
 <div class="slide main-3">
 	<div class="next-button-target" value="main-4"></div>
-	<div class="append text">They are as follows:</div>
-	<div class="append"><span class="instructions">Keep an eye out for these parts around Maker Faire.</span></div>
-	<div class="append">
-		<?php //$$todo echo out all the parts necessary for this project in a tidy list. ?>
+	<div class="append text">
+		Whenever you want to check your progress, consult the <span class="em">Parts</span> menu of your PORTABLE COMMUNICATOR.
+		<?php echo $teammatesMessage; ?>
 	</div>
 </div>
 <div class="slide main-4">
-	<div class="next-button-target" value="main-5"></div>
-	<div class="append text">Whenever you want to check your progress, visit an Inspiration Station kiosk, or consult the <span class="em">Parts</span> menu of your portable communicator.</div>
-</div>
-<div class="slide main-5">
-	<div class="append text">That's the long and the short of it.  <?php echo $myUnderstand; ?></div>
-	<div class="append">
-		<div class="green dialog button" value="yes-1">YES SIR</div>
-		<div class="red dialog button" value="no-1">NOT REALLY</div>
-	</div>
-</div>
-<div class="slide yes-1">
-	<div class="append text">Great!  I knew you were smarter than that other player.  You always pull through.  <?php echo $myGoodbye; ?></div>
-</div>
-<div class="slide no-1">
-	<div class="append text">Don't stress out, this is just a video game.  You want I should 'splain it to you again?</div>
-	<div class="append">
-		<div class="green dialog button" value="main-2">THAT WOULD BE NICE</div>
-		<div class="red dialog button" value="no-2">NO, I'M GOOD</div>
-	</div>
-</div>
-<div class="slide no-2">
-	<div class="append text">Suit yourself.  <?php echo $myGoodbye; ?></div>
+	<div class="append text">That's about it.  Just make sure the project looks good - this is my reputation we're talking about.  <?php echo $myGoodbye; ?></div>
 </div>

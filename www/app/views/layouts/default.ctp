@@ -10,7 +10,11 @@
 		echo $this->Html->meta('icon');
 		echo $this->Html->css('style.min');
 	?>
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+	<?php if(isset($zoomable_for_layout)): ?>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes, minimum-scale=0.5, maximum-scale=2.0" />
+	<?php else:?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+	<?php endif; ?>
 	 <meta name="apple-mobile-web-app-capable" content="yes" />
 	 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>

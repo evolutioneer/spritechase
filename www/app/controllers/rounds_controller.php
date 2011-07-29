@@ -8,26 +8,23 @@ class RoundsController extends AppController
 	var $components = array('Session', 'Auth', 'Cookie', 'Messager');
 	
 	/**
-	 * 
-	 */
-	function beforeFilter()
+	 *************************************************************************/
+	/*function beforeFilter()
 	{
 		parent::beforeFilter();
 		$this->Auth->authorize = 'controller';
-	}
+	}*/
 	
 	/**
-	 * 
-	 */
-	function isAuthorized()
+	 *************************************************************************/
+	/*function isAuthorized()
 	{
 		if(isset($this->adminActions[$this->action])) return $this->Auth->user('role') == admin;
 		return true;
-	}
+	}*/
 	
 	/**
-	 * 
-	 */
+	 *************************************************************************/
 	function index()
 	{
 		$this->loadModel('Project');
@@ -45,7 +42,8 @@ class RoundsController extends AppController
 			
 			for($j = 0; $j < count($rounds); $j++)
 			{
-				$started++;
+				//$$testme only count rounds that have not been canceled in the start count
+				if($rounds[$j]['dt_canceled'] < $rounds[$j]['dt_started']) $started++;
 				if($rounds[$j]['dt_completed'] > $rounds[$j]['dt_started']) $completed++;
 			}
 			
@@ -54,7 +52,7 @@ class RoundsController extends AppController
 			unset($projects[$i]['Round']);
 		}
 		
-		//$$testme count the number of parts in each project
+		//count the number of parts in each project
 		$this->loadModel('PartsProject');
 		$partCtRS = $this->PartsProject->find('all', array(
 			'fields' => array('PartsProject.project_id, COUNT(PartsProject.part_id) AS part_ct'),
@@ -74,120 +72,151 @@ class RoundsController extends AppController
 			$elapsed = $elapsed->format('%d days, %h hours, %i minutes, %s seconds');
 			$elapsed = str_replace(array('0 days, ', '0 hours, ', '0 minutes, '), '', $elapsed);
 			$currentProject['Project']['elapsed'] = $elapsed;
+			$currentProject['Round']['is_solo'] = $currentProject['Round']['user_id'] == $this->Auth->user('id');
 			$this->set('currentProject', $currentProject);
 		}
 		
+		if($this->Auth->user('team_id'))
+		{
+			$this->loadModel('Team');
+			$this->Team->contain();
+			$team = $this->Team->find('first', array(
+				'fields' => array('Team.name', 'Team.id'),
+				'conditions' => array('id' => $this->Auth->user('team_id')
+			)));
+			
+			$this->set('team', $team);
+		}
+		
+		$this->set('secret', $this->Auth->password($this->Auth->user('id')));
+		$this->set('userId', $this->Auth->user('id'));
 		$this->set('projects', $projects);
 	}
 	
 	/**
-	 *
-	 */
+	 *************************************************************************/
 	function start()
 	{
-		if($this->data)
+		//Avoid hacks
+		if(!$this->data || $this->data['secret'] != $this->Auth->password($this->Auth->user('id')))
 		{
-			$currentRound = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Auth->user('current_round_id'))));
-			
-			if(!empty($currentRound))
-			{
-				//Can't start another round while playing one already
-				$this->redirect('/rounds/stop/0/' . $this->data['Project']['id']);
-			}
-			
-			else
-			{
-				$this->loadModel('Team');
-				$this->loadModel('User');
-				$projectId = (0 . str_replace('project-', '', $this->data['Project']['id']));
-				
-				$this->Team->contain('User');
-				$teamAndUsers = $this->Team->find('first', array('conditions' => array('Team.id' => $this->Auth->user('team_id'))));
-				
-				debug($this->data);
-				
-				$this->Round->create();
-				$this->Round->save(array(
-					'team_id' => $this->Auth->user('team_id'),
-					'project_id' => (0 . str_replace('project-', '', $this->data['Project']['id'])),
-					'dt_started' => date('Y-m-d H:i:s')
-				));
-				
-				$this->Round->contain();
-				$round = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Round->getLastInsertID())));
-				
-				debug($teamAndUsers);
-				
-				//Save the current round ID to each user row in the team
-				for($i = 0; $i < count($teamAndUsers['User']); $i++)
-				{
-					$user = array('User' => array('id' => $teamAndUsers['User'][$i]['id'], 'current_round_id' => $round['Round']['id']));
-					$result = $this->User->save($user);
-				}
-				
-				$this->_refreshAuth();
-				
-				//$$testme dispatch a message to each user of the team signaling that the round has started
-				$this->loadModel('Project');
-				$project = $this->Project->find('first', array('conditions' => array('id' => $projectId)));
-				
-				$this->Messager->deliver(
-					'round_started',
-					array('projectId' => $projectId),
-					'New Round: ' . $teamAndUsers['Team']['name'] . ' Seeks the ' . $project['Project']['name'],
-					array('Team' => array('id' => $this->Auth->user('team_id'))),
-					true
-				);
-			}
-		}
-		
-		else $this->redirect('/rounds');
-	}
-	
-	/**
-	 *
-	 */
-	function stop($confirmed = null, $projectId = null)
-	{
-		if(!$this->Auth->user('current_round_id') || !$this->Auth->user('team_id')) $this->redirect('/rounds');
-		
-		if(!$confirmed)
-		{
-			$projectId = Sanitize::paranoid($projectId);
-			
-			if($projectId)
-			{
-				$this->loadModel('Project');
-				$project = $this->Project->find('first', array('conditions' => array('id' => $projectId)));
-				$this->set('project', $project);
-				//$$todo redirect to the rounds/start action with the correctly formatted data.  Perhaps rejigger rounds/start from POST data to GET.
-			}
-			
-			$this->render();
+			$this->redirect('/rounds');
 			return;
 		}
 		
-		//$$testme force terminate the round of play for the team
-		$this->loadModel('User');
-		$this->User->contain();
-		$roundUsers = $this->User->find('all', array('conditions' => array('current_round_id' => $this->Auth->user('current_round_id'))));
-		
-		debug($roundUsers);
-		
-		for($i = 0; $i < count($roundUsers); $i++)
+		//Can't start another round while playing one already
+		if($this->Auth->user('current_round_id'))
 		{
-			$roundUsers[$i]['User']['current_round_id'] = null;
-			$this->User->save($roundUsers[$i]['User']);
+			$this->redirect('/rounds');
+			return;
 		}
 		
-		debug($this->Session->read('Auth.user'));
-		$this->Session->write('Auth.user.current_round_id', null);
+		//Create the Round record and save it
+		$fields = array(
+			'project_id' => (0 . str_replace('project-', '', $this->data['Project']['id'])),
+			'dt_started' => date('Y-m-d H:i:s')
+		);
 		
-		$round = $this->Round->find('first', array('fields' => array('id', 'dt_canceled'), array('conditions' => array('id' => $this->Auth->user('current_round_id')))));
-		$round['Round']['dt_canceled'] = date('Y-m-d H:i:s');
-		$this->Round->save($round);
+		if($this->data['Project']['is_solo']) $fields['user_id'] = $this->Auth->user('id');
+		else $fields['team_id'] = $this->Auth->user('team_id');
+		
+		$this->Round->create();
+		$this->Round->save($fields);
+		$round = $this->Round->find('first', array('conditions' => array('Round.id' => $this->Round->getLastInsertID())));
+		
+		$this->loadModel('User');
+		$this->User->contain();
+		
+		//If solo, save the one user's record; 
+		if($this->data['Project']['is_solo'])
+		{
+			$user = $this->User->find('first', array('conditions' => array('User.id' => $this->Auth->user('id'))));
+			$user['User']['current_round_id'] = $round['Round']['id'];
+			$this->User->save($user);
+		}
+		
+		else
+		{
+			$this->loadModel('Team');
+			$this->Team->contain('User');
+			$team = $this->Team->find('first', array('conditions' => array('Team.id' => $this->Auth->user('team_id'))));
+			
+			//Save each user row associated with the project
+			for($i = 0; $i < count($team['User']); $i++)
+			{
+				$user = $team['User'][$i];
+				$user['current_round_id'] = $round['Round']['id'];
+				$result = $this->User->save($user);
+				
+				if(!$result) debug ('User save failed: <br/>' . print_r($user, true));
+			}
+		}
 		
 		$this->_refreshAuth();
-		$this->render('/pages/round_stopped');
+		
+		//Dispatch a message to the appropriate recipients
+		$this->loadModel('Project');
+		$project = $this->Project->find('first', array('conditions' => array('Project.id' => $this->data['Project']['id'])));
+		
+		$recipients;
+		$title;
+		
+		if($this->data['Project']['is_solo'])
+		{
+			$recipients = array('Team' => array('id' => $this->Auth->user('team_id')));
+			$title = 'New Round: ' . $this->Auth->user('name') . ' Seeks the ' . $project['Project']['name'];
+		}
+		
+		else
+		{
+			$recipients = array('User' => array('id' => $this->Auth->user('id')));
+			$title = 'New Round: ' . $team['Team']['name'] . ' Seeks the ' . $project['Project']['name'];
+		}
+		
+		$this->Messager->deliver(
+			'round_started',
+			array('roundId' => $round['Round']['id']),
+			$title,
+			$recipients,
+			true
+		);
+	}
+	
+	/**
+	 *************************************************************************/
+	function stop()
+	{
+		if(!$this->Auth->user('current_round_id')) $this->redirect('/rounds');
+		
+		if($this->data)
+		{
+			if($this->data['secret'] != $this->Auth->password($this->Auth->user('id')))
+			{
+				$this->redirect('/menus');
+				return;
+			}
+			
+			$this->loadModel('User');
+			$this->User->contain();
+			$roundUsers = $this->User->find('all', array('conditions' => array('current_round_id' => $this->Auth->user('current_round_id'))));
+			
+			for($i = 0; $i < count($roundUsers); $i++)
+			{
+				$roundUsers[$i]['User']['current_round_id'] = null;
+				$this->User->save($roundUsers[$i]['User']);
+			}
+			
+			$round = $this->Round->find('first', array('fields' => array('id', 'dt_canceled'), array('conditions' => array('id' => $this->Auth->user('current_round_id')))));
+			$round['Round']['dt_canceled'] = date('Y-m-d H:i:s');
+			$this->Round->save($round);
+			
+			$this->_refreshAuth();
+			$this->redirect('/rounds');
+		}
+		
+		else
+		{
+			$this->set('secret', $this->Auth->password($this->Auth->user('id')));
+		}
 	}
 }

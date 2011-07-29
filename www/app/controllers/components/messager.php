@@ -49,7 +49,7 @@ class MessagerComponent extends Object
 			)));
 		}
 		
-		//$$testme if redirect is passed, immediately deliver the message
+		//If redirect is passed, immediately deliver the message
 		if($redirect)
 		{
 			$this->controller->Session->write('Message.data', json_encode($messageData));

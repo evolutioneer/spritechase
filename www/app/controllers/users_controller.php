@@ -102,6 +102,7 @@ class UsersController extends AppController
 		$code = $this->Auth->user('ar_marker_id');
 		$this->set('markerCode', $code);
 		$this->set('markerURL', $this->QRMaker->getMarkerImageURL($code));
+		$this->set('zoomable_for_layout', 'true');
 	}
 	
 	/**

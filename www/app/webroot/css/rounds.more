@@ -8,6 +8,19 @@
 		{
 			cursor: pointer;
 			user-enabled: false;
+			
+			.body
+			{
+				display: none;
+			}
+		}
+		
+		.item.open
+		{
+			.body
+			{
+				display: block;
+			}
 		}
 		
 		.title

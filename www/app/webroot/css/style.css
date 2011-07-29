@@ -359,6 +359,7 @@ a:active {
   display: block;
   width: 100px;
   height: 40px;
+  padding: 0px;
   background-image: url(../img/back_to_menu.gif);
   background-position: center;
   background-repeat: no-repeat;
@@ -374,9 +375,13 @@ a:active {
   text-align: center;
 }
 .button {
-  margin: 4px;
+  display: block;
+  text-align: center;
+  margin: 4px auto;
+  padding: 10px;
   border: solid white;
   border-width: 1px 3px 3px 1px;
+  color: #efffc4;
   background: #48565a;
 }
 ul {

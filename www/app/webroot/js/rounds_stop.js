@@ -1,0 +1,1 @@
+$('#submit-button').bind('click', function(evt) { $('#form').submit(); });

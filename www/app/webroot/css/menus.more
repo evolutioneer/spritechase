@@ -16,6 +16,7 @@
 		{
 			display: block;
 			text-decoration: none;
+			text-align: left;
 			font-size: 16pt; 
 			font-style: italic;
 			padding: 6px;
