@@ -24,7 +24,7 @@
 			<div class="body">
 			<form id="login-form" action="/users/login" method="post">
 				<div class="label">Username</div>
-				<input type="text" id="login-name" name="data[User][name]" value="username" />
+				<input type="text" id="login-name" name="data[User][name]" value="enter your username" />
 				<div class="label">Password</div>
 				<input type="password" id="login-password" name="data[User][password]" value="" />
 					<div id="login-submit" class="submit button disabled">Go!</div>
@@ -36,7 +36,7 @@
 			<div class="body">
 				<form id="register-form" action="/users/register" method="post">
 					<div id="register-name-message" class="feedback neutral">Claim a username</div>
-					<input type="text" id="register-name" name="data[User][name]" value="username" />
+					<input type="text" id="register-name" name="data[User][name]" value="enter your username" />
 					<div id="register-password-message" class="feedback neutral">Enter your password (twice)</div>
 					<input type="password" id="register-password-1" name="data[User][password]" value="" />
 					<input type="password" id="register-password-2" name="data[User][password2]" value="" />

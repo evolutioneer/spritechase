@@ -17,9 +17,12 @@ var Landing = (function() {
 		$registerSubmit = $('#register-submit');
 		$loginSubmit = $('#login-submit');
 		
+		$('#login-name,#register-name').bind('focus', removeInstructionText);
+		
 		$('#register-name').bind('blur', onRegisterNameBlur);
 		$('#register-password-1,#register-password-2').bind('blur', onRegisterPasswordBlur);
 		$('#register-email').bind('blur', onRegisterEmailBlur);
+		
 		$registerSubmit.bind('click', onRegisterSubmit);
 		$loginSubmit.bind('click', onLoginSubmit);
 		
@@ -27,6 +30,16 @@ var Landing = (function() {
 		$('#login-password').bind('blur', onLoginBlur);
 	};
 	
+	// ------------------------------------------------------------------------
+	var removeInstructionText = function(evt)
+	{
+		console.log('removeInstructionText');
+		if($(evt.currentTarget).attr('value') == 'enter your username')
+		{
+			$(evt.currentTarget).attr('value', '');
+		}
+	};
+
 	// ------------------------------------------------------------------------
 	var onLoginBlur = function(evt)
 	{

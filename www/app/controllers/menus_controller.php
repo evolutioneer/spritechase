@@ -10,6 +10,7 @@ class MenusController extends AppController
 	function index()
 	{
 		$this->set('name', $this->Auth->user('name'));
+		$this->set('currentRoundId', $this->Auth->user('current_round_id'));
 	}
 	
 	/**

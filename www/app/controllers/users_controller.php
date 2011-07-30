@@ -110,14 +110,13 @@ class UsersController extends AppController
 	 */
 	function kiosk_data($arMarkerId)
 	{
-		//$$testme retrieve data based on user QR 
+		//Retrieve data based on user QR 
 		$this->User->contain();
 		
 		$user = $this->User->find('first', array(
 			'fields' => array('User.id', 'User.name', 'User.team_id'),
 			'conditions' => array('User.ar_marker_id' => $arMarkerId)
 		));
-		$this->set('user', $user);
 		
 		if($user['User']['team_id'])
 		{
@@ -142,6 +141,7 @@ class UsersController extends AppController
 			))
 		));
 		
+		$this->set('user', $user);
 		$this->set('round', $round);
 		$this->set('leaders', $this->getLeaders());
 		$this->layout = '/xml/default';
@@ -152,14 +152,57 @@ class UsersController extends AppController
 	 */
 	private function getLeaders()
 	{
-		//$$debug returning debug data for now
+		$this->loadModel('Leader');
+		
+		//Get the last time stamp from the cron
+		$lastTimeRow = $this->Leader->query('SELECT MAX(Leader.dt_entered) AS dt_entered ' .
+			'FROM leaders Leader ' .
+			'LIMIT 1'
+		);
+		
+		$lastTime = $lastTimeRow[0][0]['dt_entered'];
+		
+		//Get the leading users
+		$userRows = $this->Leader->find('all', array(
+			'fields' => array('user_name'),
+			'conditions' => array('user_name NOT ' => '', 'dt_entered' => $lastTime),
+			'order' => 'rank',
+			'limit' => 10
+		));
+		
+		$users = array();
+		$userCt = count($userRows);
+		
+		for($i = 0; $i < 10; $i++)
+		{
+			$user = $i < $userCt ? $userRows[$i]['Leader']['user_name'] : '.';
+			array_push($users, $user);
+		}
+		
+		//Get the leading teams
+		$teamRows = $this->Leader->find('all', array(
+			'fields' => array('team_name'),
+			'conditions' => array('team_name NOT ' => '', 'dt_entered' => $lastTime),
+			'order' => 'rank',
+			'limit' => 10
+		));
+		
+		$teams = array();
+		$teamCt = count($teamRows);
+		
+		for($i = 0; $i < 10; $i++)
+		{
+			$team = $i < $teamCt ? $teamRows[$i]['Leader']['team_name'] : '.';
+			array_push($teams, $team);
+		}
+		
+		//debug($users);
+		//debug($teams);
+		
 		return array(
-			'Team' => array(
-				'Team1', 'Team2', 'Team3', 'Team4', 'Team5',
-				'Team6', 'Team7', 'Team8', 'Team9', 'Team10'), 
-			'User' => array(
-				'User1', 'User2', 'User3', 'User4', 'User5',
-				'User6', 'User7', 'User8', 'User9', 'User10'));
+			'Team' => $teams,
+			'User' => $users
+		);
 	}
 	
 	/**
