@@ -20,7 +20,21 @@
 			.body
 			{
 				display: block;
+				
+				.instructions
+				{
+					padding: 5px;
+					border: 1px solid white;
+					font-style: italic;
+				}
 			}
+		}
+		
+		.description
+		{
+			width: 80%;
+			margin: 20px auto;
+			font-size: 14pt;
 		}
 		
 		.title
@@ -31,11 +45,6 @@
 			width: 250px;
 			overflow:  hidden;
 			
-		}
-		
-		.description
-		{
-			display: none;
 		}
 		
 		.stats

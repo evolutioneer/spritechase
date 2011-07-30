@@ -2,6 +2,7 @@
 <div id="home">
 	<div class="menu-title"></div>
 	<div class="main-menu">
+		<div class="header">Welcome, <?php echo $name;?></div>
 		<div class="items">
 			<a class="item button" href="/messages">Messages</a>
 			<a class="item button" href="/parts">Parts</a>

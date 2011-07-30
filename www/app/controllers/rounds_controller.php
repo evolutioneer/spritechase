@@ -30,7 +30,7 @@ class RoundsController extends AppController
 		$this->loadModel('Project');
 		$this->Project->contain('Round');
 		$projects = $this->Project->find('all', array(
-			'fields' => array('id', 'name', 'desc', 'asset_thumb_url'),
+			'fields' => array('id', 'name', 'desc'),
 			'order' => 'name ASC'
 		));
 		

@@ -66,7 +66,7 @@
 	
 	.item.found
 	{
-		background: url(../img/found.gif) 230px 50px no-repeat @midground-green;
+		background: url(../img/found.gif) 230px 5px no-repeat @midground-green;
 		
 		.thumbnail
 		{

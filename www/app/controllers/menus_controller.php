@@ -9,7 +9,7 @@ class MenusController extends AppController
 	 *************************************************************************/
 	function index()
 	{
-		
+		$this->set('name', $this->Auth->user('name'));
 	}
 	
 	/**

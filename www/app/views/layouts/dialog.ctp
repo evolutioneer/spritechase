@@ -30,8 +30,8 @@
 					</div>
 					<div class="lights">
 					</div>
-					<div class="login button">
-					</div>
+					<a class="login button" href="/menus">
+					</a>
 				</div>
 				<div class="row-2">
 					<div class="sprite name"><span>

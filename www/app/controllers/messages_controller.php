@@ -16,15 +16,17 @@ class MessagesController extends AppController
 		//If the user has an associated team ID, obtain the team messages
 		if($this->Auth->user('team_id'))
 		{
-			$messages = array_merge($messages, $this->Message->find('all', array('conditions' => array(
-				'team_id' => $this->Auth->user('team_id')
-			))));
+			$messages = array_merge($messages, $this->Message->find('all', array(
+				'conditions' => array('team_id' => $this->Auth->user('team_id')),
+				'limit' => '10'
+			)));
 		}
 		
 		//Obtain the user messages
-		$messages = array_merge($messages, $this->Message->find('all', array('conditions' => array(
-				'user_id' => $this->Auth->user('id')
-		))));
+		$messages = array_merge($messages, $this->Message->find('all', array(
+			'conditions' => array('user_id' => $this->Auth->user('id')),
+			'limit' => '10'	
+		)));
 		
 		//Sort on date received
 		function _sortFunc($a, $b) { return strcmp($b['Message']['dt_sent'], $a['Message']['dt_sent']); }

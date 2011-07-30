@@ -8,15 +8,22 @@
 #projects .items .item.open .body {
   display: block;
 }
+#projects .items .item.open .body .instructions {
+  padding: 5px;
+  border: 1px solid white;
+  font-style: italic;
+}
+#projects .items .description {
+  width: 80%;
+  margin: 20px auto;
+  font-size: 14pt;
+}
 #projects .items .title {
   font-size: 18pt;
   font-weight: bold;
   margin: 5px;
   width: 250px;
   overflow: hidden;
-}
-#projects .items .description {
-  display: none;
 }
 #projects .items .stats {
   top: 0px;

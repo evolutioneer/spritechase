@@ -40,7 +40,7 @@
   display: block;
 }
 .parts.items .item.found {
-  background: url(../img/found.gif) 230px 50px no-repeat #496756;
+  background: url(../img/found.gif) 230px 5px no-repeat #496756;
 }
 .parts.items .item.found .thumbnail {
   border-color: #496756;

@@ -164,12 +164,18 @@ class PartsController extends AppController
 	
 	/**
 	 * Callback when a good QR code is found
-	 */
+	 *************************************************************************/
 	function captured()
 	{
 		//Recall the captured part ID from session, prior to the redirect
 		$id = $this->Session->read('Part.id');
 		$this->Session->write('Part.id', '');
+		
+		if($id == '' || $id == null)
+		{
+			$this->redirect('/menus');
+			return;
+		}
 		
 		$this->Part->contain();
 		$part = $this->Part->find('first', array('conditions' => array('id' => $id)));
@@ -242,7 +248,7 @@ class PartsController extends AppController
 			
 			else
 			{
-				$newPartCount = ++$partsRound['PartsRound']['ct'];
+				$partsRoundCt = ++$partsRound['PartsRound']['ct'];
 				$this->PartsRound->save($partsRound);
 			}
 			
@@ -264,7 +270,7 @@ class PartsController extends AppController
 				if(!isset($foundIDs[$project['Part'][$i]['id']])) array_push($remainingParts, $project['Part'][$i]);
 				
 				//Otherwise, if a needed part was found *AND* it is this part, flag it as such for the dialog
-				else if($foundIDs[$project['Part'][$i]['id']]) $relevantPart = true;
+				else if($part['Part']['id'] == $project['Part'][$i]['id']) $relevantPart = true;
 			}
 			
 			// ======================================= PROJECT COMPLETED
@@ -300,12 +306,13 @@ class PartsController extends AppController
 				$this->Messager->deliver(
 					'round_completed',
 					array(
+						'roundId' => $round['Round']['id'],
 						'projectId' => $projectId,
 						'roundTimeTaken' => $roundTimeTaken,
 						'teamPlay' => false
 					),
 					'Round Complete: ' . $project['Project']['name'],
-					recipient, false//true
+					recipient, true
 				);
 			}
 			
@@ -327,11 +334,10 @@ class PartsController extends AppController
 						'partId' => $part['Part']['id'],
 						'partsRoundCt' => $partsRoundCt,
 						'relevantPart' => $relevantPart,
-						'newPartUser' => $newPartUser,
-						'newPartRound' => $newPartRound,
+						'newPartUser' => $newPartUser
 					),
 					'Part Collected: ' . $part['Part']['name'],
-					$recipient, false//true
+					$recipient, true
 				);
 			}
 		}
@@ -350,12 +356,11 @@ class PartsController extends AppController
 					'partsRoundCt' => $partsRoundCt,
 					'relevantPart' => $relevantPart,
 					'newPartUser' => $newPartUser,
-					'newPartRound' => $newPartRound,
 					'teamPlay' => false
 				),
 				'Part Collected: ' . $part['Part']['name'],
 				array('User' => array('id' => $this->Auth->user('id'))),
-				false//true
+				true
 			);
 		}
 	}

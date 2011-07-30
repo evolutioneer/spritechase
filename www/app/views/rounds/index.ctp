@@ -44,8 +44,8 @@
 			Visit SpriteChase headquarters in the <span class="em">i3Detroit area</span> of Maker Faire to form a team with your friends.
 		</p>
 		<?php endif; ?>
+		</div>
 	<?php endif; ?>
-	</div>
 	<div class="header">PROJECT LIST</div>
 	<div class="instructions">
 		<ul>
@@ -64,7 +64,6 @@
 		?>
 		<div class="item" id="project-<?php echo $row['id']; ?>">
 			<div class="title"><?php echo $row['name']; ?></div>
-			<div class="description"><?php echo $row['desc']; ?></div>
 			<div class="stats">
 				<div class="completed">
 					Wins: <?php echo $row['rounds_completed']; ?>
@@ -78,14 +77,15 @@
 				<br class="clear" />
 			</div>
 			<div class="body">
-			<?php if(isset($currentProject)): ?>
-				<div class="instructions">You can't start a scavenger hunt for this project until you <a href="/rounds/stop">stop your current one</a>.</div>
-			<?php else: ?>
-			<?php if(isset($team)): ?>
-				<div class="team-play button">START TEAM ROUND</div>
-			<?php endif; ?>
-				<div class="solo-play button">START SOLO ROUND</div>
-			<?php endif; ?>
+				<div class="description"><?php echo $row['desc']; ?></div>
+				<?php if(isset($currentProject)): ?>
+					<div class="instructions">You can't start a scavenger hunt for this project until you <a href="/rounds/stop">stop your current one</a>.</div>
+				<?php else: ?>
+				<?php if(isset($team)): ?>
+					<div class="team-play button">START TEAM ROUND</div>
+				<?php endif; ?>
+					<div class="solo-play button">START SOLO ROUND</div>
+				<?php endif; ?>
 			</div>
 			
 		</div>
