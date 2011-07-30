@@ -15,7 +15,7 @@
 	<div class="face" value="irmo"></div>
 	<div class="name" value="Funky Pants"></div>
 	<div class="next-button-target" value="main-4"></div>
-	<div class="append text">Well done, <?php isset($teamName) ? 'Team ' . $teamName : $userName?>!  You really did pull through, though really at the last minute.</div>
+	<div class="append text">Well done!  You pulled through a finished project.  A little late, I dare say, since Maker Faire is happening right now... but I forgive you.</div>
 </div>
 <div class="slide main-4">
 	<div class="next-button-target" value="main-5"></div>
@@ -32,6 +32,5 @@
 <div class="slide main-7">
 	<div class="face" value="imp"></div>
 	<div class="name" value="Technician Imp"></div>
-	<div class="next-button-target" value="main-6"></div>
 	<div class="append text">Thanks for playing SpriteChase.  You can always pick another project and play again.  If you are keen on winning a few prizes, keep an eye on the leaderboards - you might be there.  Take care!</div>
 </div>

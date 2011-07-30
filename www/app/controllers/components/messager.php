@@ -49,12 +49,10 @@ class MessagerComponent extends Object
 			)));
 		}
 		
-		//$$debug suspend the redirect, find out what's going on
-		//If redirect is passed, immediately deliver the message
-		/*if($redirect)
+		if($redirect)
 		{
 			$this->controller->Session->write('Message.data', json_encode($messageData));
 			$this->controller->redirect('/dialogs/' . $messageDialog);
-		}*/
+		}
 	}
 }
