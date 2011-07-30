@@ -108,6 +108,8 @@ class DialogsController extends AppController
 		//$userName
 		//$criticism
 		
+		$this->set('roundTimeTaken', $data->roundTimeTaken);
+		
 		//Get the project name
 		$this->loadModel('Project');
 		$this->Project->contain();

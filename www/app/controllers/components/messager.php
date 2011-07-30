@@ -26,7 +26,7 @@ class MessagerComponent extends Object
 		if(isset($recipients['Team']))
 		{
 			//Send to a team
-			$this->controller->Message->save(array('Message' => array(
+			$result = $this->controller->Message->save(array('Message' => array(
 				'team_id' => $recipients['Team']['id'],
 				'data' => json_encode($messageData),
 				'dialog' => $messageDialog,
@@ -49,11 +49,12 @@ class MessagerComponent extends Object
 			)));
 		}
 		
+		//$$debug suspend the redirect, find out what's going on
 		//If redirect is passed, immediately deliver the message
-		if($redirect)
+		/*if($redirect)
 		{
 			$this->controller->Session->write('Message.data', json_encode($messageData));
 			$this->controller->redirect('/dialogs/' . $messageDialog);
-		}
+		}*/
 	}
 }

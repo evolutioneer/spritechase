@@ -18,6 +18,7 @@ class MessagesController extends AppController
 		{
 			$messages = array_merge($messages, $this->Message->find('all', array(
 				'conditions' => array('team_id' => $this->Auth->user('team_id')),
+				'order' => array('Message.dt_sent DESC'),
 				'limit' => '10'
 			)));
 		}
@@ -25,6 +26,7 @@ class MessagesController extends AppController
 		//Obtain the user messages
 		$messages = array_merge($messages, $this->Message->find('all', array(
 			'conditions' => array('user_id' => $this->Auth->user('id')),
+			'order' => array('Message.dt_sent DESC'),
 			'limit' => '10'	
 		)));
 		
@@ -35,8 +37,6 @@ class MessagesController extends AppController
 		$this->set('messages', $messages);
 	}
 	
-	
-	
 	function view($id)
 	{
 		//Do a little double-checking.  If this user owns the message id or team id, write the data to session and redirect.
@@ -44,9 +44,6 @@ class MessagesController extends AppController
 		$id = Sanitize::paranoid($id);
 		$this->Message->contain();
 		$message = $this->Message->find('first', array('conditions' => array('id' => $id)));
-		
-		debug('Message: ');
-		debug($message);
 		
 		if(empty($message)) $this->redirect('/messages');
 		

@@ -13,8 +13,7 @@ class PartsController extends AppController
 	var $components = array('Session', 'Cookie', 'Auth', 'Messager');
 	
 	/**
-	 *
-	 */
+	 *************************************************************************/
 	function beforeFilter()
 	{
 		parent::beforeFilter();
@@ -22,8 +21,7 @@ class PartsController extends AppController
 	}
 	
 	/**
-	 *
-	 */
+	 *************************************************************************/
 	function isAuthorized()
 	{
 		if(isset($this->adminActions[$this->action]))
@@ -35,8 +33,7 @@ class PartsController extends AppController
 	}
 	
 	/**
-	 *
-	 */
+	 *************************************************************************/
 	function index()
 	{
 		$this->_refreshAuth();
@@ -97,8 +94,7 @@ class PartsController extends AppController
 	}
 	
 	/**
-	 *
-	 */
+	 *************************************************************************/
 	function viewall()
 	{
 		$this->Part->contain();
@@ -118,8 +114,7 @@ class PartsController extends AppController
 	}
 	
 	/**
-	 *
-	 */
+	 *************************************************************************/
 	function clear()
 	{
 		$this->loadModel('PartsUser');
@@ -259,19 +254,33 @@ class PartsController extends AppController
 			$project = $this->Project->find('first', array('conditions' => array('id' => $round['Round']['project_id'])));
 			
 			//Get the IDs of all the parts found in this round
-			$foundIDs = array();
+			$foundIDs = array($part['Part']['id'] => true);
 			for($i = 0; $i < count($round['Part']); $i++) $foundIDs[$round['Part'][$i]['id']] = true;
 			
 			//Identify the parts that remain to be found.  They will be set and used in the sprite dialog for this part.
 			$remainingParts = array();
+			
+			//debug('part[Part]: ');
+			//debug($part);
+			
+			//debug('project[Part]: ');
+			//debug($project['Part']);
+			
 			for($i = 0; $i < count($project['Part']); $i++)
 			{
-				//If a needed project part isn't in the project parts found this round, put it in the remaining list.
-				if(!isset($foundIDs[$project['Part'][$i]['id']])) array_push($remainingParts, $project['Part'][$i]);
+				//If this project part is our project part, flag it as a relevant part
+				if($part['Part']['id'] == $project['Part'][$i]['id']) $relevantPart = true;
 				
-				//Otherwise, if a needed part was found *AND* it is this part, flag it as such for the dialog
-				else if($part['Part']['id'] == $project['Part'][$i]['id']) $relevantPart = true;
+				//If this project part hasn't been found yet, put it in the remaining list
+				if(!isset($foundIDs[$project['Part'][$i]['id']])) array_push($remainingParts, $project['Part'][$i]);
 			}
+			
+			//$$debug wtf, why am I not seeing the end of project screen?
+			//debug('remainingParts: ');
+			//debug($remainingParts);
+			
+			//debug('foundIDs: ');
+			//debug($foundIDs);
 			
 			// ======================================= PROJECT COMPLETED
 			//If all parts for the project have been found, save the round as completed, 
@@ -283,6 +292,7 @@ class PartsController extends AppController
 				$this->Round->save($round);
 				
 				//$$testme loop over all members of the team and remove their current_round_id
+				$this->loadModel('User');
 				$this->User->contain();
 				$users = $this->User->find('all', array('conditions' => array('current_round_id' => $roundId)));
 				for($i = 0; $i < count($users); $i++)
@@ -293,8 +303,8 @@ class PartsController extends AppController
 				
 				//$$testme calculate the overall time taken for the round
 				$roundTimeTaken = date_diff(new DateTime($round['Round']['dt_completed']), new DateTime($round['Round']['dt_started']));
-				$roundTimeTaken = $elapsed->format('%d days, %h hours, %i minutes, %s seconds');
-				$roundTimeTaken = str_replace(array('0 days, ', '0 hours, ', '0 minutes, '), '', $elapsed);
+				$roundTimeTaken = $roundTimeTaken->format('%d days, %h hours, %i minutes, %s seconds');
+				$roundTimeTaken = str_replace(array('0 days, ', '0 hours, ', '0 minutes, '), '', $roundTimeTaken);
 				
 				$this->_refreshAuth();
 				
@@ -307,12 +317,12 @@ class PartsController extends AppController
 					'round_completed',
 					array(
 						'roundId' => $round['Round']['id'],
-						'projectId' => $projectId,
+						'projectId' => $project['Project']['id'],
 						'roundTimeTaken' => $roundTimeTaken,
 						'teamPlay' => false
 					),
 					'Round Complete: ' . $project['Project']['name'],
-					recipient, true
+					$recipient, true
 				);
 			}
 			

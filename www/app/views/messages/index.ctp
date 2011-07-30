@@ -12,8 +12,8 @@
 			$classes = 'item' . ($row['dt_opened'] ? ' opened' : '');
 		?>
 		<a class="<?php echo $classes?>" href="/messages/view/<?php echo $row['id']; ?>">
-			<div class="title"><?php echo $row['title']; ?></div>
 			<div class="time"><?php echo date('D, M j, g:i A', strtotime($row['dt_sent'])); ?></div>
+			<div class="title"><?php echo $row['title']; ?></div>
 		</a>
 		<?php endfor; ?>
 	</div>

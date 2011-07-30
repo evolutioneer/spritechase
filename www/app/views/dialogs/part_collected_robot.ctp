@@ -21,8 +21,6 @@
 <div class="slide main-3">
 	<div class="next-button-target" value="main-4"></div>
 	<div class="append text"><?php 
-	echo "relevant part: '" . $relevantPart . "'  ";
-	//$$testme If the part was relevant and the first, congratulate user
 	if($relevantPart):
 	?>Resource is necessary for fabrication of your target.  <?php 
 	

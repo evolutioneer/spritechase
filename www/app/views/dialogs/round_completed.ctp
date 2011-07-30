@@ -1,11 +1,3 @@
-<?php 
-
-/**
- * 
- */
-
-?>
-
 <div class="slide main-1">
 	<div class="face" value="imp"></div>
 	<div class="name" value="Technician Imp"></div>

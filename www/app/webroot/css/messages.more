@@ -5,6 +5,20 @@
 	.item
 	{
 		background: @bright-gray;
+		margin: 10px;
+		padding: 3px;
+		
+		.title
+		{
+			font-weight: bold;
+		}
+
+		.time
+		{
+			font-size: 8pt;
+			color: bright-bray;
+			border-bottom: 1px solid @bright-gray;
+		}
 	}
 	
 	.item.opened

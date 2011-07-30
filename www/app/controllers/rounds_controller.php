@@ -170,7 +170,7 @@ class RoundsController extends AppController
 		else
 		{
 			$recipients = array('User' => array('id' => $this->Auth->user('id')));
-			$title = 'New Round: ' . $team['Team']['name'] . ' Seeks the ' . $project['Project']['name'];
+			$title = 'New Round: ' . $team['Team']['name'] . ' Seek the ' . $project['Project']['name'];
 		}
 		
 		$this->Messager->deliver(
